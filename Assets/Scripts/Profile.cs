@@ -29,4 +29,51 @@ public class Profile : MonoBehaviour
     }
 
     public int Catharsis = 0;
+
+    public Profile()
+    {
+
+    }
+
+    public Profile(Profile zOrigin)
+    {
+        CopyValuesFrom(zOrigin);
+    }
+
+    public void CopyValuesFrom(Profile zOrigin)
+    {
+        Name = zOrigin.Name;
+        Health = zOrigin.Health;
+
+        Vigor = zOrigin.Vigor;
+        Dexterity = zOrigin.Dexterity;
+        Intelect = zOrigin.Intelect;
+        Presence = zOrigin.Presence;
+
+        Modifiers.Clear();
+        foreach (Modifier modifier in zOrigin.Modifiers)
+        {
+            Modifier newModifier = new Modifier();
+            newModifier.Name = modifier.Name;
+            newModifier.Level = modifier.Level;
+            newModifier.Description = modifier.Description;
+            Modifiers.Add(newModifier);
+        }
+        Debug.Log("Copiados mods: " + string.Join(",", Modifiers.ConvertAll(m => m.Name.ToString()).ToArray()));
+
+        Powers.Clear();
+        foreach (Power power in zOrigin.Powers)
+        {
+            Power newPower = new Power();
+            newPower.Name = power.Name;
+            newPower.Level = power.Level;
+            newPower.Description = power.Description;
+            //todo: probablemente más cosas que añadir aquí??
+            Powers.Add(newPower);
+        }
+
+        Catharsis = zOrigin.Catharsis;
+
+        Notes = zOrigin.Notes;
+    }
 }

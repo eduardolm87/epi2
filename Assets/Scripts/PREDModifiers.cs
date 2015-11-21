@@ -28,27 +28,32 @@ public class PREDModifiers : MonoBehaviour
         AppManager.Instance.UIManager.PopupManager.PopupModifiersEditor.Open();
     }
 
-    void LoadModifiersFromProfile()
+    public void LoadModifiersFromProfile()
     {
         RemoveDeprecatedEntries();
 
         foreach (Modifier modifier in ProfileEditor.CurrentlyEditingProfile.Modifiers)
         {
-            Modifierentry entry = InstantiatedEntries.FirstOrDefault(m => m.Modifier == modifier);
+            Debug.Log("Repaso el modificador de mi perfil " + modifier.Name);
+            Modifierentry entry = InstantiatedEntries.FirstOrDefault(m => m.Modifier.Name == modifier.Name);
             if (entry == null)
             {
+                Debug.Log("No lo tengo asi que lo creo.");
                 AddNewModifierToList(modifier);
             }
             else
             {
+                Debug.Log("Ya lo tenía así que lo actualizo.");
                 entry.Assign(modifier);
+                //<-- despues de esto es nulo!
+                Debug.Log("No deberia ser nulo. Lo es?" + (entry.Modifier == null).ToString());
             }
         }
     }
 
     void RemoveDeprecatedEntries()
     {
-        List<Modifierentry> deprecatedEntries = InstantiatedEntries.Where(m => !ProfileEditor.CurrentlyEditingProfile.Modifiers.Contains(m.Modifier)).ToList();
+        List<Modifierentry> deprecatedEntries = InstantiatedEntries.Where(m => !ProfileEditor.CurrentlyEditingProfile.Modifiers.ConvertAll(x => x.Name).Contains(m.Modifier.Name)).ToList();
         while (deprecatedEntries.Count > 0)
         {
             Destroy(InstantiatedEntries[0].gameObject);

@@ -13,18 +13,16 @@ public class Modifier : MonoBehaviour
     {
         get
         {
-            if (Level < 0)
-            {
-                return "<color=red>" + Level.ToString() + "</color>";
-            }
-            else if (Level == 0)
-            {
-                return Level.ToString();
-            }
-            else
-            {
-                return "<color=green>" + "+" + Level.ToString() + "</color>";
-            }
+            return Defines.FormatComplexityNumber(Level);
         }
+    }
+
+    public Modifier() { }
+
+    public Modifier(Modifier zOrigin)
+    {
+        Name = zOrigin.Name;
+        Level = zOrigin.Level;
+        Description = zOrigin.Description;
     }
 }

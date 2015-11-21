@@ -54,4 +54,20 @@ public class Defines : MonoBehaviour
     }
 
     //todo: daños
+
+    public static string FormatComplexityNumber(int zLevel)
+    {
+        if (zLevel < 0)
+        {
+            return "<color=red>" + zLevel.ToString() + "</color>";
+        }
+        else if (zLevel == 0)
+        {
+            return zLevel.ToString();
+        }
+        else
+        {
+            return "<color=green>" + "+" + zLevel.ToString() + "</color>";
+        }
+    }
 }

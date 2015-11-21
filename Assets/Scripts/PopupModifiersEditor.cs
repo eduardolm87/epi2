@@ -16,7 +16,7 @@ public class PopupModifiersEditor : MonoBehaviour
 
     bool SuggestionsLoaded = false;
 
-    public void Open()
+    public void Open(Modifier zModelModifier = null)
     {
         if (!AppManager.Instance.UIManager.PopupManager.CanOpen)
             return;
@@ -26,6 +26,21 @@ public class PopupModifiersEditor : MonoBehaviour
         gameObject.SetActive(true);
 
         LoadSuggestionsFromReferences();
+
+        if (zModelModifier == null)
+            Debug.Log("Se hace un open con un modificador model NULL");
+        else
+            Debug.Log("Se hace un open con un modificador model " + zModelModifier.Name);
+
+
+        if (zModelModifier != null)
+            LoadModelModifier(zModelModifier);
+        else
+        {
+            ModifierInput.text = "Nuevo";
+            ModifierFinalLevel = 1;
+            RefreshLevel();
+        }
 
         iTween.ScaleFrom(gameObject, iTween.Hash("scale", new Vector3(0, 0, 0), "time", 1.5f, "easetype", iTween.EaseType.easeOutElastic));
     }
@@ -52,6 +67,13 @@ public class PopupModifiersEditor : MonoBehaviour
         SuggestionsLoaded = true;
     }
 
+    void LoadModelModifier(Modifier zModifier)
+    {
+        ModifierInput.text = zModifier.Name;
+        ModifierFinalLevel = zModifier.Level;
+        RefreshLevel();
+    }
+
     void CreateSuggestionButton(Modifier zModifier)
     {
         GameObject ModifierButtonObj = Instantiate(ModifiersSuggestionPrefab.gameObject) as GameObject;
@@ -66,7 +88,24 @@ public class PopupModifiersEditor : MonoBehaviour
     {
         //todo: Aplicar a la ficha
 
+        Modifier existingModifier = ProfileEditor.CurrentlyEditingProfile.Modifiers.FirstOrDefault(m => m.Name == ModifierInput.text);
+        if (existingModifier != null)
+        {
+            existingModifier.Level = ModifierFinalLevel;
+        }
+        else
+        {
+            Modifier newModifier = new Modifier();
+            newModifier.Name = ModifierInput.text;
+            newModifier.Level = ModifierFinalLevel;
+
+            ProfileEditor.CurrentlyEditingProfile.Modifiers.Add(newModifier);
+        }
+
         Close();
+
+        AppManager.Instance.UIManager.ProfileEditor.Refresh();
+        AppManager.Instance.UIManager.ProfileEditor.Modifiers.LoadModifiersFromProfile();
     }
 
     public void CancelChanges()
@@ -82,5 +121,11 @@ public class PopupModifiersEditor : MonoBehaviour
     public void ChangeLevel(int zQuantity)
     {
         ModifierFinalLevel = Mathf.Clamp(ModifierFinalLevel + zQuantity, -10, 10);
+        RefreshLevel();
+    }
+
+    public void RefreshLevel()
+    {
+        ModifierLevel.text = Defines.FormatComplexityNumber(ModifierFinalLevel);
     }
 }
