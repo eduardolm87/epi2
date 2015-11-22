@@ -10,12 +10,29 @@ public class UIManager : MonoBehaviour
     public ProfileEditor ProfileEditor;
     public ProfileInspector ProfileInspector;
     public TitleScreen TitleScreen;
+    public ProfileSelector ProfileSelector;
 
 
     public void OpenFromStart()
     {
         CloseAllWindows(TitleScreen.gameObject);
         TitleScreen.Open();
+
+        PopupManager.PopupSimple.Open("Hola MIA", "Molas cantidád y vamos a triunfar!!", new List<PopupButton>() { 
+            new PopupButton("botón 1", 
+                delegate 
+                {
+                    //
+                    Debug.Log("Función 1");
+                    //
+                }), 
+            new PopupButton("botón 2", 
+                delegate 
+                {
+                    //
+                    Debug.Log("Función 2");
+                    //
+                }) });
     }
 
     public void CloseAllWindows(params GameObject[] Exceptions)
@@ -43,6 +60,11 @@ public class UIManager : MonoBehaviour
         if (!Exceptions.Contains(TitleScreen.gameObject))
         {
             TitleScreen.Close();
+        }
+
+        if (!Exceptions.Contains(ProfileSelector.gameObject))
+        {
+            ProfileSelector.Close();
         }
     }
 }

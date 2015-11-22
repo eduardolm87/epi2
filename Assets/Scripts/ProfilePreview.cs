@@ -23,6 +23,7 @@ public class ProfilePreview : MonoBehaviour
     public void DoneButton()
     {
         ProfileInspector.CurrentProfile = ProfileEditor.CurrentlyEditingProfile;
+        ProfileInspector.SaveCurrentProfile();
         AppManager.Instance.UIManager.ProfileEditor.Close();
         AppManager.Instance.UIManager.ProfileInspector.Open();
     }

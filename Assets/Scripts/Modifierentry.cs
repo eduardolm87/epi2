@@ -28,8 +28,6 @@ public class Modifierentry : MonoBehaviour
     public void RemoveButton()
     {
         ProfileEditor.CurrentlyEditingProfile.Modifiers.RemoveAll(m => m.Name == Modifier.Name);
-        Debug.Log("Eliminado " + Modifier.Name);
-        Debug.Log("En el profile quedan: " + string.Join(",", ProfileEditor.CurrentlyEditingProfile.Modifiers.ConvertAll(m => m.Name).ToArray()));
         AppManager.Instance.UIManager.ProfileEditor.Modifiers.LoadModifiersFromProfile();
     }
 }

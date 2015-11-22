@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 
-
-public class Profile : MonoBehaviour
+[System.Serializable]
+public class Profile
 {
     public string Name = "";
 
@@ -29,6 +30,8 @@ public class Profile : MonoBehaviour
     }
 
     public int Catharsis = 0;
+
+
 
     public Profile()
     {
@@ -74,5 +77,75 @@ public class Profile : MonoBehaviour
         Catharsis = zOrigin.Catharsis;
 
         Notes = zOrigin.Notes;
+    }
+
+    public bool isDefaultProfile
+    {
+        get
+        {
+            return AppManager.Instance.ReferenceManager.DefaultProfiles.Any(p => p.Name == Name);
+        }
+    }
+
+    public bool hasModifications
+    {
+        get
+        {
+            Profile originalProfile = AppManager.Instance.ReferenceManager.FindProfile(Name);
+            if (originalProfile == null)
+                return true;
+
+            return this.IsIdenticalTo(originalProfile);
+        }
+    }
+
+    bool IsIdenticalTo(Profile zProfile)
+    {
+        if (Name != zProfile.Name)
+            return false;
+
+        if (Health != zProfile.Health)
+            return false;
+
+        if (Vigor != zProfile.Vigor)
+            return false;
+
+        if (Dexterity != zProfile.Dexterity)
+            return false;
+
+        if (Intelect != zProfile.Intelect)
+            return false;
+
+        if (Presence != zProfile.Presence)
+            return false;
+
+        if (Notes != zProfile.Notes)
+            return false;
+
+        if (Catharsis != zProfile.Catharsis)
+            return false;
+
+        if (Modifiers.Count != zProfile.Modifiers.Count)
+            return false;
+
+        for (int i = 0; i < Modifiers.Count; i++)
+        {
+            if (Modifiers[i].Name != zProfile.Modifiers[i].Name)
+                return false;
+
+            if (Modifiers[i].Level != zProfile.Modifiers[i].Level)
+                return false;
+        }
+
+        if (Powers.Count != zProfile.Powers.Count)
+            return false;
+
+        for (int i = 0; i < Powers.Count; i++)
+        {
+            if (Powers[i].Name != zProfile.Powers[i].Name)
+                return false;
+        }
+
+        return true;
     }
 }

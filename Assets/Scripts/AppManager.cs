@@ -23,6 +23,7 @@ public class AppManager : MonoBehaviour
 
     void Start()
     {
+        ReferenceManager.LoadReferences();
         UIManager.OpenFromStart();
     }
 

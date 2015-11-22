@@ -27,18 +27,12 @@ public class PopupModifiersEditor : MonoBehaviour
 
         LoadSuggestionsFromReferences();
 
-        if (zModelModifier == null)
-            Debug.Log("Se hace un open con un modificador model NULL");
-        else
-            Debug.Log("Se hace un open con un modificador model " + zModelModifier.Name);
-
-
         if (zModelModifier != null)
             LoadModelModifier(zModelModifier);
         else
         {
-            ModifierInput.text = "Nuevo";
-            ModifierFinalLevel = 1;
+            ModifierInput.text = Defines.defaultModifierName;
+            ModifierFinalLevel = Defines.defaultModifierLevel;
             RefreshLevel();
         }
 

@@ -70,4 +70,17 @@ public class Defines : MonoBehaviour
             return "<color=green>" + "+" + zLevel.ToString() + "</color>";
         }
     }
+
+
+
+    public static string defaultModifierName = "Nuevo";
+    public static int defaultModifierLevel = 1;
+    public static string defaultOKText = "OK";
+    public static string errorPopupTitle = "Error";
+    public static string defaultProfileCantDelete = "No se pueden borrar los perfiles de ejemplo.";
+    public static string warningTitle = "Atención";
+    public static string reallydeleteProfile = "¿De verdad quieres borrar el perfil";
+    public static string yes = "SI";
+    public static string no = "NO";
+    public static string deleteConfirmation = "Borrado perfil ";
 }

@@ -14,7 +14,7 @@ public class ProfileInspector : MonoBehaviour
 
     public static Profile CurrentProfile = null;
 
-    public void Open()
+    public void Open(Profile zProfileToOpen = null)
     {
         AppManager.Instance.UIManager.CloseAllWindows(gameObject, AppManager.Instance.UIManager.StatusBar.gameObject);
 
@@ -22,17 +22,21 @@ public class ProfileInspector : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        if (CurrentProfile == null)
+        if (CurrentProfile == null || (zProfileToOpen != null && zProfileToOpen != CurrentProfile))
         {
-            LoadDefaultProfile();
-
             iTween.ScaleFrom(gameObject, iTween.Hash("scale", new Vector3(1, 0, 0), "time", 1f, "easetype", iTween.EaseType.easeOutExpo));
         }
 
+        if (zProfileToOpen == null)
+            LoadDefaultProfile();
+        else
+            LoadProfile(zProfileToOpen);
     }
 
     public void Close()
     {
+        SaveCurrentProfile();
+
         AppManager.Instance.UIManager.StatusBar.Close();
 
         gameObject.SetActive(false);
@@ -63,13 +67,41 @@ public class ProfileInspector : MonoBehaviour
 
     public void ButtonRename()
     {
-        //todo
+        //todo: Cuidado, renombrar tiene truco... hay que hacer esto:
+        //Saca un popup para meter el nuevo nombre. Si se mete un nuevo nombre y se acepta, entonces...
+        //Si es un perfil de los que hay por defecto, crea uno nuevo con este nombre y respeta el viejo.
+        //Si es un perfil de usuario, entonces se carga el viejo y crea uno nuevo con este nombre.
 
     }
 
     public void ButtonDelete()
     {
-        //todo
+        if (CurrentProfile.isDefaultProfile)
+        {
+            AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.errorPopupTitle, Defines.defaultProfileCantDelete, new List<PopupButton>());
+        }
+        else
+        {
+            AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.reallydeleteProfile + " " + CurrentProfile.Name + "?", new List<PopupButton>() { 
+            new PopupButton(Defines.yes, 
+                delegate 
+                {
+                    string NameOfDeletedProfile = CurrentProfile.Name;
+
+
+
+                    //todo: ELIMINAR EL PERFIL
+
+
+
+                    CurrentProfile = null;
+                    ProfileEditor.CurrentlyEditingProfile = null;
+                    AppManager.Instance.UIManager.CloseAllWindows();
+                    AppManager.Instance.UIManager.ProfileSelector.Open();
+                    AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.deleteConfirmation + NameOfDeletedProfile, new List<PopupButton>());
+                }), 
+            new PopupButton(Defines.no, null) });
+        }
     }
 
     void LoadDefaultProfile()
@@ -91,5 +123,27 @@ public class ProfileInspector : MonoBehaviour
         Cat.text = "CATARSIS: " + CurrentProfile.Catharsis.ToString();
         Health.text = "SALUD: " + Defines.HealthLevelToString(CurrentProfile.Health);
         //todo: portrait
+    }
+
+
+    public static void SaveCurrentProfile()
+    {
+        if (CurrentProfile == null)
+            return;
+
+        if (CurrentProfile.isDefaultProfile)
+        {
+            if (CurrentProfile.hasModifications)
+            {
+                //todo: Popup avisando de que no se va a guardar porque es default
+                Debug.Log("No guardado porque es un perfil de ejemplo.");
+            }
+            return;
+        }
+        else if (CurrentProfile.hasModifications)
+        {
+            //to-do:guardar en el xml. Puede ser que ya exista o puede ser un nuevo profile!!
+            Debug.Log("Salvado " + CurrentProfile.Name);
+        }
     }
 }

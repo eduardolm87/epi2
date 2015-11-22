@@ -23,7 +23,7 @@ public class TitleScreen : MonoBehaviour
 
     public void StartAppZone()
     {
-        //todo: entrar al ultimo perfil? o al selector de perfiles?
-        AppManager.Instance.UIManager.ProfileInspector.Open();
+        //AppManager.Instance.UIManager.ProfileInspector.Open();
+        AppManager.Instance.UIManager.ProfileSelector.Open();
     }
 }
