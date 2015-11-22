@@ -34,19 +34,14 @@ public class PREDModifiers : MonoBehaviour
 
         foreach (Modifier modifier in ProfileEditor.CurrentlyEditingProfile.Modifiers)
         {
-            Debug.Log("Repaso el modificador de mi perfil " + modifier.Name);
             Modifierentry entry = InstantiatedEntries.FirstOrDefault(m => m.Modifier.Name == modifier.Name);
             if (entry == null)
             {
-                Debug.Log("No lo tengo asi que lo creo.");
                 AddNewModifierToList(modifier);
             }
             else
             {
-                Debug.Log("Ya lo tenía así que lo actualizo.");
                 entry.Assign(modifier);
-                //<-- despues de esto es nulo!
-                Debug.Log("No deberia ser nulo. Lo es?" + (entry.Modifier == null).ToString());
             }
         }
     }
@@ -56,7 +51,7 @@ public class PREDModifiers : MonoBehaviour
         List<Modifierentry> deprecatedEntries = InstantiatedEntries.Where(m => !ProfileEditor.CurrentlyEditingProfile.Modifiers.ConvertAll(x => x.Name).Contains(m.Modifier.Name)).ToList();
         while (deprecatedEntries.Count > 0)
         {
-            Destroy(InstantiatedEntries[0].gameObject);
+            Destroy(deprecatedEntries[0].gameObject);
             InstantiatedEntries.Remove(deprecatedEntries[0]);
             deprecatedEntries.RemoveAt(0);
         }

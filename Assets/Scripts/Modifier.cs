@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Modifier : MonoBehaviour
+[System.Serializable]
+public class Modifier
 {
     public string Name = "";
-    [HideInInspector]
     public int Level = 1;
-    [TextArea]
-    public string Description = "";
+
 
     public string FormattedLevel
     {
@@ -17,12 +16,15 @@ public class Modifier : MonoBehaviour
         }
     }
 
-    public Modifier() { }
+    public Modifier()
+    {
+        Name = "???";
+        Level = 1;
+    }
 
     public Modifier(Modifier zOrigin)
     {
         Name = zOrigin.Name;
         Level = zOrigin.Level;
-        Description = zOrigin.Description;
     }
 }

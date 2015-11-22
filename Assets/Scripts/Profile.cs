@@ -56,10 +56,9 @@ public class Profile : MonoBehaviour
             Modifier newModifier = new Modifier();
             newModifier.Name = modifier.Name;
             newModifier.Level = modifier.Level;
-            newModifier.Description = modifier.Description;
             Modifiers.Add(newModifier);
         }
-        Debug.Log("Copiados mods: " + string.Join(",", Modifiers.ConvertAll(m => m.Name.ToString()).ToArray()));
+        //Debug.Log("Copiados mods: " + string.Join(",", Modifiers.ConvertAll(m => m.Name.ToString()).ToArray()));
 
         Powers.Clear();
         foreach (Power power in zOrigin.Powers)
