@@ -41,7 +41,7 @@ public class PowerDescriptorPopup : MonoBehaviour
 
     void Refresh()
     {
-        Title.text = PowerExample.Power.Name + " (" + Defines.levelName + " " + PowerExample.Power.Level.ToString() + ")";
+        Title.text = PowerExample.Power.Name + " (" + Defines.levelName + " " + PowerExample.Level.ToString() + ")";
         DescriptionTitle.text = Defines.description;
         DescriptionText.text = PowerExample.Description;
         AdditionalOptsTitle.text = Defines.additionalOptions;

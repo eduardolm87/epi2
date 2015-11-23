@@ -191,15 +191,12 @@ public class Profile
             newModifier.Level = modifier.Level;
             Modifiers.Add(newModifier);
         }
-        //Debug.Log("Copiados mods: " + string.Join(",", Modifiers.ConvertAll(m => m.Name.ToString()).ToArray()));
 
         Powers.Clear();
         foreach (Power power in zOrigin.Powers)
         {
             Power newPower = new Power();
             newPower.Name = power.Name;
-            newPower.Level = power.Level;
-            //todo: probablemente más cosas que añadir aquí??
             Powers.Add(newPower);
         }
 

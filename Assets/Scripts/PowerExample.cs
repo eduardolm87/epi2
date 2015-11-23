@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class PowerExample : MonoBehaviour
 {
     public Power Power = new Power();
 
+    public int Level = 1;
+
     [TextArea]
     public string Description = "";
 
-    void OnValidate()
-    {
-        gameObject.name = Power.Name;
-    }
+    public List<AdditionalOption> AdditionalOptions = new List<AdditionalOption>();
+
+
+    //void OnValidate()
+    //{
+    //    gameObject.name = Power.Name;
+    //}
 
     public string AdditionalOptionsToString()
     {
@@ -23,5 +30,14 @@ public class PowerExample : MonoBehaviour
         d += "<b>+1</b> Ejemplo 4\n";
 
         return d;
+    }
+
+    [System.Serializable]
+    public class AdditionalOption
+    {
+        public string Name = "";
+        public int Difficulty = 1;
+        [TextArea]
+        public string Description = "";
     }
 }

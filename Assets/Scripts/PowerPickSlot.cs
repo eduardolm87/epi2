@@ -22,7 +22,7 @@ public class PowerPickSlot : MonoBehaviour
 
     public void Refresh()
     {
-        Text.text = PowerExample.Power.Name + " (" + Defines.levelName + " " + PowerExample.Power.Level.ToString() + ")";
+        Text.text = PowerExample.Power.Name + " (" + Defines.levelName + " " + PowerExample.Level.ToString() + ")";
 
         if (Selected)
         {
