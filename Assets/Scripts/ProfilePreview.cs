@@ -6,6 +6,9 @@ public class ProfilePreview : MonoBehaviour
 {
     public Text Name;
     public Text EXPCAT;
+    [SerializeField]
+    string ColorHEXWhenReloading = "#0F0F0F";
+
 
     [HideInInspector]
     public int oldEXP = 0;
@@ -35,7 +38,7 @@ public class ProfilePreview : MonoBehaviour
             else if (oldEXP > actualEXP)
                 oldEXP -= 1;
 
-            EXPCAT.text = "EXP: " + "<color=orange>" + oldEXP.ToString() + "</color>";
+            EXPCAT.text = "EXP: " + "<color=" + ColorHEXWhenReloading + ">" + oldEXP.ToString() + "</color>";
             yield return new WaitForSeconds(0.05f);
         }
 
