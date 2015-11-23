@@ -49,7 +49,7 @@ public class Profile
     {
         get
         {
-            return 888; //todo
+            return Powers.Count * 10 + Modifiers.Count * 5; //todo: fake fake
         }
     }
 

@@ -7,10 +7,42 @@ public class ProfilePreview : MonoBehaviour
     public Text Name;
     public Text EXPCAT;
 
+    [HideInInspector]
+    public int oldEXP = 0;
+
+    bool refreshing = false;
+
     public void Refresh()
     {
         Name.text = ProfileEditor.CurrentlyEditingProfile.Name;
-        EXPCAT.text = "EXP: " + ProfileEditor.CurrentlyEditingProfile.Experience.ToString() + "   " + "CAT: " + ProfileEditor.CurrentlyEditingProfile.Catharsis.ToString();
+        StartCoroutine(RefreshEXPCoroutine());
+    }
+
+    IEnumerator RefreshEXPCoroutine()
+    {
+        while (refreshing)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        refreshing = true;
+
+        int actualEXP = ProfileEditor.CurrentlyEditingProfile.Experience;
+        while (oldEXP != actualEXP && refreshing)
+        {
+            if (oldEXP < actualEXP)
+                oldEXP += 1;
+            else if (oldEXP > actualEXP)
+                oldEXP -= 1;
+
+            EXPCAT.text = "EXP: " + "<color=orange>" + oldEXP.ToString() + "</color>";
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        oldEXP = actualEXP;
+        EXPCAT.text = "EXP: " + oldEXP.ToString();
+
+        refreshing = false;
     }
 
     public void BackButton()

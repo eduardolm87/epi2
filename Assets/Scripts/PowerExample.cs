@@ -15,19 +15,15 @@ public class PowerExample : MonoBehaviour
     public List<AdditionalOption> AdditionalOptions = new List<AdditionalOption>();
 
 
-    //void OnValidate()
-    //{
-    //    gameObject.name = Power.Name;
-    //}
 
     public string AdditionalOptionsToString()
     {
-        string d;
+        string d = "";
 
-        d = "<b>+1</b> Ejemplo 1\n";
-        d += "<b>+1</b> Ejemplo 2\n";
-        d += "<b>+1</b> Ejemplo 3\n";
-        d += "<b>+1</b> Ejemplo 4\n";
+        foreach (AdditionalOption addOption in AdditionalOptions)
+        {
+            d += "<b>" + "(" + Defines.FormatComplexityNumber(addOption.Difficulty) + ") " + addOption.Name + "</b>: " + addOption.Description + "\n";
+        }
 
         return d;
     }

@@ -105,6 +105,8 @@ public class ProfileInspector : MonoBehaviour
 
                     AppManager.Instance.UIManager.PopupManager.CloseAll();
                     Debug.Log("Deberia abrirse ventana de confirmacion justo ahora");
+                   
+                    //todo bug : Esto no se abre
                     AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.deleteConfirmation + NameOfDeletedProfile, new List<PopupButton>());
                 }), 
             new PopupButton(Defines.no, null) });

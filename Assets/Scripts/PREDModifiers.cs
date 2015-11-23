@@ -44,6 +44,8 @@ public class PREDModifiers : MonoBehaviour
                 entry.Assign(modifier);
             }
         }
+
+        AppManager.Instance.UIManager.ProfileEditor.Refresh();
     }
 
     void RemoveDeprecatedEntries()

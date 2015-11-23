@@ -29,7 +29,9 @@ public class ProfileEditor : MonoBehaviour
 
         OpenTab(Sections.Attributes);
 
-        LoadProfile(new Profile(ProfileInspector.CurrentProfile)); //crea nuevo perfil copia del perfil que hay en el inspector
+        LoadProfile(new Profile(ProfileInspector.CurrentProfile));
+
+        ProfilePreview.oldEXP = CurrentlyEditingProfile.Experience;
     }
 
     public void Close()
@@ -78,7 +80,7 @@ public class ProfileEditor : MonoBehaviour
     void LoadProfile(Profile zProfile)
     {
         CurrentlyEditingProfile = zProfile;
-        //todo: refrescar EXP
+
         ProfilePreview.Refresh();
     }
 

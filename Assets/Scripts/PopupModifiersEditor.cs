@@ -80,8 +80,6 @@ public class PopupModifiersEditor : MonoBehaviour
 
     public void ApplyChanges()
     {
-        //todo: Aplicar a la ficha
-
         Modifier existingModifier = ProfileEditor.CurrentlyEditingProfile.Modifiers.FirstOrDefault(m => m.Name == ModifierInput.text);
         if (existingModifier != null)
         {

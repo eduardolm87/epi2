@@ -53,6 +53,7 @@ public class PREDPowers : MonoBehaviour
             }
         }
 
+        AppManager.Instance.UIManager.ProfileEditor.Refresh();
     }
 
     void RemoveDeprecatedEntries()
@@ -85,6 +86,9 @@ public class PREDPowers : MonoBehaviour
         AppManager.Instance.UIManager.PopupManager.PowerSelectorPopUp.Open(availablePowers, new Action<Power>(delegate(Power zPower)
             {
                 ProfileEditor.CurrentlyEditingProfile.Powers.Add(zPower);
+
+                AppManager.Instance.UIManager.ProfileEditor.Refresh();
+                AppManager.Instance.UIManager.ProfileEditor.Powers.LoadPowersFromProfile();
 
                 LoadPowersFromProfile();
             }));
