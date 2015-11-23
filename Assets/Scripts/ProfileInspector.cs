@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class ProfileInspector : MonoBehaviour
 {
@@ -28,9 +29,13 @@ public class ProfileInspector : MonoBehaviour
         }
 
         if (zProfileToOpen == null)
+        {
             LoadDefaultProfile();
+        }
         else
+        {
             LoadProfile(zProfileToOpen);
+        }
     }
 
     public void Close()
@@ -67,11 +72,10 @@ public class ProfileInspector : MonoBehaviour
 
     public void ButtonRename()
     {
-        //todo: Cuidado, renombrar tiene truco... hay que hacer esto:
-        //Saca un popup para meter el nuevo nombre. Si se mete un nuevo nombre y se acepta, entonces...
-        //Si es un perfil de los que hay por defecto, crea uno nuevo con este nombre y respeta el viejo.
-        //Si es un perfil de usuario, entonces se carga el viejo y crea uno nuevo con este nombre.
-
+        AppManager.Instance.UIManager.PopupManager.PopupRenameProfile.Open(CurrentProfile, new Action<string>(delegate(string zInput)
+            {
+                AppManager.Instance.UIManager.ProfileInspector.RenameProfile(zInput);
+            }));
     }
 
     public void ButtonDelete()
@@ -128,7 +132,6 @@ public class ProfileInspector : MonoBehaviour
         //todo: portrait
     }
 
-
     public static void SaveCurrentProfile()
     {
         if (CurrentProfile == null)
@@ -149,5 +152,25 @@ public class ProfileInspector : MonoBehaviour
         {
             IOManager.Instance.SaveProfile(CurrentProfile);
         }
+    }
+
+    public void RenameProfile(string zInput)
+    {
+
+        if (!CurrentProfile.isDefaultProfile)
+        {
+            IOManager.Instance.DeleteProfile(CurrentProfile);
+            CurrentProfile.Name = zInput;
+        }
+        else
+        {
+            //todo
+            CurrentProfile = new Profile(CurrentProfile);
+            CurrentProfile.Name = zInput;
+        }
+
+        IOManager.Instance.SaveProfile(CurrentProfile);
+        AppManager.Instance.ReferenceManager.LoadUserProfiles();
+        LoadProfile(CurrentProfile);
     }
 }

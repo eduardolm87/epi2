@@ -88,4 +88,5 @@ public class Defines : MonoBehaviour
     public static string ProfilesPath = Application.persistentDataPath + "/Profiles";
     public static string profilesFileExtension = "ep3";
     public static string profileWontBeSavedBecauseDefault = "Este perfil es de ejemplo. No se guardarán los cambios que hayas hecho.";
+    public static string newProfileName = "Nuevo Personaje";
 }

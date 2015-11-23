@@ -2,12 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
+using System;
 
 public class ProfileSelector : MonoBehaviour
 {
     public Profileslot ProfileSlotPrefab;
     public Transform SelectorList;
+
+    public Color UserProfileColor = Color.gray;
+    public Color DefaultProfileColor = Color.blue;
 
     [HideInInspector]
     public List<Profileslot> ProfileSlotsLoaded = new List<Profileslot>();
@@ -96,5 +99,23 @@ public class ProfileSelector : MonoBehaviour
     bool ProfileAlreadyLoaded(Profile zProfile)
     {
         return ProfileSlotsLoaded.Any(p => p.Profile.Name == zProfile.Name);
+    }
+
+    public void CreateNewProfile()
+    {
+        Profile newProfile = new Profile();
+        newProfile.Name = Defines.newProfileName + " " + AppManager.Instance.ReferenceManager.UserProfiles.Count;
+
+        AppManager.Instance.UIManager.PopupManager.PopupRenameProfile.Open(newProfile, new Action<string>(delegate(string zInput)
+        {
+            newProfile.Name = zInput;
+
+            AppManager.Instance.UIManager.CloseAllWindows();
+            IOManager.Instance.SaveProfile(newProfile);
+            AppManager.Instance.ReferenceManager.LoadUserProfiles();
+
+            AppManager.Instance.UIManager.ProfileInspector.LoadProfile(newProfile);
+            AppManager.Instance.UIManager.ProfileEditor.Open();
+        }));
     }
 }

@@ -22,7 +22,17 @@ public class Profileslot : MonoBehaviour
 
     public void Refresh()
     {
+        if (Profile.isDefaultProfile)
+        {
+            Text.color = AppManager.Instance.UIManager.ProfileSelector.DefaultProfileColor;
+        }
+        else
+        {
+            Text.color = AppManager.Instance.UIManager.ProfileSelector.UserProfileColor;
+        }
+
         Text.text = Profile.Name;
+
         //todo: más cosas podrían venir aquí, como la hora de ultima modificacion, o autor, etc.
     }
 }
