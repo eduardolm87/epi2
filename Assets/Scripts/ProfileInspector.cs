@@ -89,15 +89,18 @@ public class ProfileInspector : MonoBehaviour
                     string NameOfDeletedProfile = CurrentProfile.Name;
 
 
-
-                    //todo: ELIMINAR EL PERFIL
-
-
+                    if(!IOManager.Instance.DeleteProfile(CurrentProfile))
+                    {
+                        Debug.LogError("Error deleting profile");
+                    }
 
                     CurrentProfile = null;
                     ProfileEditor.CurrentlyEditingProfile = null;
                     AppManager.Instance.UIManager.CloseAllWindows();
                     AppManager.Instance.UIManager.ProfileSelector.Open();
+
+                    AppManager.Instance.UIManager.PopupManager.CloseAll();
+                    Debug.Log("Deberia abrirse ventana de confirmacion justo ahora");
                     AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.deleteConfirmation + NameOfDeletedProfile, new List<PopupButton>());
                 }), 
             new PopupButton(Defines.no, null) });
@@ -135,9 +138,12 @@ public class ProfileInspector : MonoBehaviour
         {
             if (CurrentProfile.hasModifications)
             {
-                AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.profileWontBeSavedBecauseDefault, new List<PopupButton>());
+                if (!Defines.AdviceForOverwritingExamplesDisplayed)
+                {
+                    Defines.AdviceForOverwritingExamplesDisplayed = true;
+                    AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.profileWontBeSavedBecauseDefault, new List<PopupButton>());
+                }
             }
-            return;
         }
         else if (CurrentProfile.hasModifications)
         {

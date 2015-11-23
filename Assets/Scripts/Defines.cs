@@ -71,6 +71,8 @@ public class Defines : MonoBehaviour
         }
     }
 
+    public static bool AdviceForOverwritingExamplesDisplayed = false;
+
 
 
     public static string defaultModifierName = "Nuevo";

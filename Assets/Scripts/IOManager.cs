@@ -74,4 +74,29 @@ public class IOManager : MonoBehaviour
         return files.ToList();
     }
 
+    public bool DeleteProfile(Profile zProfile)
+    {
+        //Cargarse el archivo
+        string filepath = Defines.ProfilesPath + "/" + zProfile.FormatFileName;
+
+        if (!File.Exists(filepath))
+        {
+            Debug.LogError("File " + filepath + " does not exist.");
+            return false;
+        }
+
+        try
+        {
+            File.Delete(filepath);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+            return false;
+        }
+
+        AppManager.Instance.ReferenceManager.LoadUserProfiles();
+        return true;
+    }
+
 }

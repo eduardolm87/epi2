@@ -95,6 +95,6 @@ public class ProfileSelector : MonoBehaviour
 
     bool ProfileAlreadyLoaded(Profile zProfile)
     {
-        return ProfileSlotsLoaded.Any(p => p.Profile == zProfile);
+        return ProfileSlotsLoaded.Any(p => p.Profile.Name == zProfile.Name);
     }
 }

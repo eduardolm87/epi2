@@ -24,7 +24,6 @@ public class ReferenceManager : MonoBehaviour
     {
         Modifiers.Clear();
         DefaultProfiles.Clear();
-        UserProfiles.Clear();
 
         foreach (ModifierExample modf in ModifierReferences)
         {
@@ -63,6 +62,8 @@ public class ReferenceManager : MonoBehaviour
 
     public void LoadUserProfiles()
     {
+        UserProfiles.Clear();
+
         List<string> files = IOManager.Instance.ListAllProfileFiles();
         foreach (string path in files)
         {
