@@ -3,11 +3,13 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Events;
+using System;
+
 
 public class PowerSelectorPopUp : MonoBehaviour
 {
     public PowerPickSlot PowerPickSlotPrefab;
+
     public Transform PowersList;
 
     List<PowerPickSlot> Entries = new List<PowerPickSlot>();
@@ -23,8 +25,9 @@ public class PowerSelectorPopUp : MonoBehaviour
 
     bool TutorialHasBeenShown = false;
     bool TipBeingShown = false;
+    Action<Power> ActionWhenChosen = null;
 
-    public void Open(List<PowerExample> zListOfPowersToShow)
+    public void Open(List<PowerExample> zListOfPowersToShow, Action<Power> zActionWhenChosen = null)
     {
         if (!AppManager.Instance.UIManager.PopupManager.CanOpen)
             return;
@@ -36,6 +39,7 @@ public class PowerSelectorPopUp : MonoBehaviour
         LoadEntries(zListOfPowersToShow);
 
         chosenEntry = null;
+        ActionWhenChosen = zActionWhenChosen;
 
         if (!TutorialHasBeenShown)
         {
@@ -138,23 +142,28 @@ public class PowerSelectorPopUp : MonoBehaviour
 
     void CenterOnEntry(PowerPickSlot zSlot)
     {
+        if(MoreInfoTutorialObject.activeInHierarchy)
+        {
+            HideTip();
+        }
+
         SnapTo(chosenEntry.GetComponent<RectTransform>());
     }
 
     IEnumerator TutorialTip()
     {
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.5f);
 
         MoreInfoTutorialObject.gameObject.SetActive(true);
         MoreInfoTutorialObject.transform.position = Entries.First().transform.GetChild(1).position;
         MoreInfoTutorialObject.transform.SetParent(Entries.First().transform.GetChild(1));
 
-        iTween.ScaleFrom(MoreInfoTutorialObject, iTween.Hash("scale", Vector3.one * 0.25f, "time", 0.75f, "easetype", iTween.EaseType.easeOutBounce));
-        yield return new WaitForSeconds(0.75f);
+        iTween.ScaleFrom(MoreInfoTutorialObject, iTween.Hash("scale", Vector3.one * 0.25f, "time", 0.5f, "easetype", iTween.EaseType.easeOutBounce));
+        yield return new WaitForSeconds(0.5f);
 
         TipBeingShown = true;
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
 
         HideTip();
     }
@@ -181,7 +190,10 @@ public class PowerSelectorPopUp : MonoBehaviour
 
     public void OKButton()
     {
-        //todo
+        if (ActionWhenChosen != null && chosenEntry != null)
+            ActionWhenChosen(chosenEntry.PowerExample.Power);
+
+        CancelButton();
     }
 
     public void CancelButton()

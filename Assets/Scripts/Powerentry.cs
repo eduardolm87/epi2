@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Powerentry : MonoBehaviour
 {
@@ -21,7 +22,8 @@ public class Powerentry : MonoBehaviour
 
     public void RemoveButton()
     {
-
+        ProfileEditor.CurrentlyEditingProfile.Powers.Remove(Power);
+        AppManager.Instance.UIManager.ProfileEditor.Powers.LoadPowersFromProfile();
     }
 
     public void InfoButton()

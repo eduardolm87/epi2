@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class PREDPowers : MonoBehaviour
 {
@@ -81,7 +82,17 @@ public class PREDPowers : MonoBehaviour
     {
         List<PowerExample> availablePowers = AppManager.Instance.ReferenceManager.PowerReferences.Where(x => !ProfileEditor.CurrentlyEditingProfile.Powers.ConvertAll(j => j.Name).Contains(x.Power.Name)).ToList();
 
-        AppManager.Instance.UIManager.PopupManager.PowerSelectorPopUp.Open(availablePowers);
+        AppManager.Instance.UIManager.PopupManager.PowerSelectorPopUp.Open(availablePowers, new Action<Power>(delegate(Power zPower)
+            {
+                Debug.Log("Has elegido el poder " + zPower.Name);
+
+                ProfileEditor.CurrentlyEditingProfile.Powers.Add(zPower);
+
+                LoadPowersFromProfile();
+            }));
     }
+
+
+
 
 }
