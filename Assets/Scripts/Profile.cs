@@ -49,7 +49,21 @@ public class Profile
     {
         get
         {
-            return Powers.Count * 10 + Modifiers.Count * 5; //todo: fake fake
+            int expfinal = 0;
+
+            //Reglas de la experiencia aqui 
+            
+            //todo: FAKES
+
+            expfinal += Powers.Count * 10;
+            expfinal += Modifiers.Count * 5;
+            expfinal += (int)Vigor * 2;
+            expfinal += (int)Dexterity * 2;
+            expfinal += (int)Intelect * 2;
+            expfinal += (int)Presence * 2;
+
+
+            return expfinal;
         }
     }
 

@@ -27,11 +27,11 @@ public class ProfileEditor : MonoBehaviour
 
         //iTween.ScaleFrom(gameObject, iTween.Hash("scale", new Vector3(1, 0, 0), "time", 0.25f, "easetype", iTween.EaseType.easeOutExpo));
 
-        OpenTab(Sections.Attributes);
-
         LoadProfile(new Profile(ProfileInspector.CurrentProfile));
 
         ProfilePreview.oldEXP = CurrentlyEditingProfile.Experience;
+        
+        OpenTab(Sections.Attributes);
     }
 
     public void Close()

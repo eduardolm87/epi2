@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
+public enum ATTRIBUTES { VIGOR = 0, DESTREZA = 1, INTELECTO = 2, PRESENCIA = 3 };
 public enum ATTRIBUTELEVELS { PESIMO = 0, POBRE = 1, MEDIOCRE = 2, COMPETENTE = 3, EXCELENTE = 4, PRODIGIOSO = 5 };
 public enum SUCCESSLEVELS { CATASTROFE = 0, FRACASO = 1, FALLO = 2, ACIERTO = 3, EXTRAORDINARIO = 4, PERFECTO = 5 };
 public enum HEALTHLEVELS { MUERTO = 0, MORIBUNDO = 1, GRAVE = 2, HERIDO = 3, MAGULLADO = 4, SANO = 5 };
@@ -49,6 +49,18 @@ public class Defines : MonoBehaviour
             case SUCCESSLEVELS.FALLO: return "Fallo";
             case SUCCESSLEVELS.FRACASO: return "Fracaso";
             case SUCCESSLEVELS.CATASTROFE: return "Catástrofe";
+        }
+        return "???";
+    }
+
+    public static string AttributeNameToString(ATTRIBUTES zAttribute)
+    {
+        switch (zAttribute)
+        {
+            case ATTRIBUTES.VIGOR: return "VIGOR";
+            case ATTRIBUTES.DESTREZA: return "DESTREZA";
+            case ATTRIBUTES.INTELECTO: return "INTELECTO";
+            case ATTRIBUTES.PRESENCIA: return "PRESENCIA";
         }
         return "???";
     }
