@@ -16,6 +16,7 @@ public class ReferenceManager : MonoBehaviour
 
 
     public List<ModifierExample> ModifierReferences = new List<ModifierExample>();
+
     public List<ProfileExample> ProfileReferences = new List<ProfileExample>();
 
 
@@ -35,7 +36,7 @@ public class ReferenceManager : MonoBehaviour
             DefaultProfiles.Add(prof.Profile);
         }
 
-        //todo: Load user profiles
+        LoadUserProfiles();
     }
 
     public Profile FindProfile(Profile zProfile)
@@ -58,6 +59,19 @@ public class ReferenceManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void LoadUserProfiles()
+    {
+        List<string> files = IOManager.Instance.ListAllProfileFiles();
+        foreach (string path in files)
+        {
+            Profile newProfile = IOManager.Instance.ReadProfile(path);
+            if (newProfile != null && !UserProfiles.Any(pf => pf.Name == newProfile.Name))
+            {
+                UserProfiles.Add(newProfile);
+            }
+        }
     }
 
 

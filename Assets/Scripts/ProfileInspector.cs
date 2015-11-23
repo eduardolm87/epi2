@@ -24,7 +24,7 @@ public class ProfileInspector : MonoBehaviour
 
         if (CurrentProfile == null || (zProfileToOpen != null && zProfileToOpen != CurrentProfile))
         {
-            iTween.ScaleFrom(gameObject, iTween.Hash("scale", new Vector3(1, 0, 0), "time", 1f, "easetype", iTween.EaseType.easeOutExpo));
+            //iTween.ScaleFrom(gameObject, iTween.Hash("scale", new Vector3(1, 0, 0), "time", 1f, "easetype", iTween.EaseType.easeOutExpo));
         }
 
         if (zProfileToOpen == null)
@@ -135,15 +135,13 @@ public class ProfileInspector : MonoBehaviour
         {
             if (CurrentProfile.hasModifications)
             {
-                //todo: Popup avisando de que no se va a guardar porque es default
-                Debug.Log("No guardado porque es un perfil de ejemplo.");
+                AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.profileWontBeSavedBecauseDefault, new List<PopupButton>());
             }
             return;
         }
         else if (CurrentProfile.hasModifications)
         {
-            //to-do:guardar en el xml. Puede ser que ya exista o puede ser un nuevo profile!!
-            Debug.Log("Salvado " + CurrentProfile.Name);
+            IOManager.Instance.SaveProfile(CurrentProfile);
         }
     }
 }

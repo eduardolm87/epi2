@@ -36,7 +36,7 @@ public class PopupModifiersEditor : MonoBehaviour
             RefreshLevel();
         }
 
-        iTween.ScaleFrom(gameObject, iTween.Hash("scale", new Vector3(0, 0, 0), "time", 1.5f, "easetype", iTween.EaseType.easeOutElastic));
+        //iTween.ScaleFrom(gameObject, iTween.Hash("scale", new Vector3(0, 0, 0), "time", 1.5f, "easetype", iTween.EaseType.easeOutElastic));
     }
 
     public void Close()

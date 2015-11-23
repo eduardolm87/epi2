@@ -2,24 +2,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
+using System.IO;
+using System;
 
 
 [System.Serializable]
+[XmlRoot("Profile")]
 public class Profile
 {
+    [XmlElement("Name")]
     public string Name = "";
 
+    [XmlElement("Health")]
     public HEALTHLEVELS Health = HEALTHLEVELS.SANO;
 
+    [XmlElement("Vigor")]
     public ATTRIBUTELEVELS Vigor = ATTRIBUTELEVELS.POBRE;
+
+    [XmlElement("Dexterity")]
     public ATTRIBUTELEVELS Dexterity = ATTRIBUTELEVELS.POBRE;
+
+    [XmlElement("Intelect")]
     public ATTRIBUTELEVELS Intelect = ATTRIBUTELEVELS.POBRE;
+
+    [XmlElement("Presence")]
     public ATTRIBUTELEVELS Presence = ATTRIBUTELEVELS.POBRE;
 
+    [XmlArray("Modifiers")]
+    [XmlArrayItem("Modifier")]
     public List<Modifier> Modifiers = new List<Modifier>();
+
+    [XmlArray("Powers")]
+    [XmlArrayItem("Power")]
     public List<Power> Powers = new List<Power>();
 
+    [XmlElement("Notes")]
     public string Notes = "";
+
+    [XmlElement("Catharsis")]
+    public int Catharsis = 0;
+
+
 
     public int Experience
     {
@@ -27,56 +51,6 @@ public class Profile
         {
             return 888; //todo
         }
-    }
-
-    public int Catharsis = 0;
-
-
-
-    public Profile()
-    {
-
-    }
-
-    public Profile(Profile zOrigin)
-    {
-        CopyValuesFrom(zOrigin);
-    }
-
-    public void CopyValuesFrom(Profile zOrigin)
-    {
-        Name = zOrigin.Name;
-        Health = zOrigin.Health;
-
-        Vigor = zOrigin.Vigor;
-        Dexterity = zOrigin.Dexterity;
-        Intelect = zOrigin.Intelect;
-        Presence = zOrigin.Presence;
-
-        Modifiers.Clear();
-        foreach (Modifier modifier in zOrigin.Modifiers)
-        {
-            Modifier newModifier = new Modifier();
-            newModifier.Name = modifier.Name;
-            newModifier.Level = modifier.Level;
-            Modifiers.Add(newModifier);
-        }
-        //Debug.Log("Copiados mods: " + string.Join(",", Modifiers.ConvertAll(m => m.Name.ToString()).ToArray()));
-
-        Powers.Clear();
-        foreach (Power power in zOrigin.Powers)
-        {
-            Power newPower = new Power();
-            newPower.Name = power.Name;
-            newPower.Level = power.Level;
-            newPower.Description = power.Description;
-            //todo: probablemente más cosas que añadir aquí??
-            Powers.Add(newPower);
-        }
-
-        Catharsis = zOrigin.Catharsis;
-
-        Notes = zOrigin.Notes;
     }
 
     public bool isDefaultProfile
@@ -93,9 +67,11 @@ public class Profile
         {
             Profile originalProfile = AppManager.Instance.ReferenceManager.FindProfile(Name);
             if (originalProfile == null)
+            {
                 return true;
+            }
 
-            return this.IsIdenticalTo(originalProfile);
+            return !this.IsIdenticalTo(originalProfile);
         }
     }
 
@@ -147,5 +123,111 @@ public class Profile
         }
 
         return true;
+    }
+
+    public string FormatFileName
+    {
+        get
+        {
+            string result = Name;
+            if (result.Length > 50)
+                result = result.Remove(50);
+
+            result = result.Replace("/", "");
+            result = result.Replace("\\", "");
+            result = result.Replace("<", "");
+            result = result.Replace(">", "");
+            result = result.Replace("ñ", "n");
+            result = result.Replace(" ", "__");
+            result = result.Replace("&", "");
+            result = result.Replace("`", "");
+            result = result.Replace("´", "");
+            result = result.Replace("[", "");
+            result = result.Replace("]", "");
+            result = result.Replace(":", "");
+            result = result.Replace(".", "");
+            result = result.Replace(",", "");
+            result = result.Replace(";", "");
+            result = result.Replace("\"", "");
+            result = result.Replace("$", "");
+            result = result.Replace("ç", "c");
+            result = result.Replace("{", "c");
+            result = result.Replace("}", "c");
+
+
+            return result + "." + Defines.profilesFileExtension;
+        }
+    }
+
+
+    public Profile()
+    {
+
+    }
+
+    public Profile(Profile zOrigin)
+    {
+        CopyValuesFrom(zOrigin);
+    }
+
+
+
+
+    public void CopyValuesFrom(Profile zOrigin)
+    {
+        Name = zOrigin.Name;
+        Health = zOrigin.Health;
+
+        Vigor = zOrigin.Vigor;
+        Dexterity = zOrigin.Dexterity;
+        Intelect = zOrigin.Intelect;
+        Presence = zOrigin.Presence;
+
+        Modifiers.Clear();
+        foreach (Modifier modifier in zOrigin.Modifiers)
+        {
+            Modifier newModifier = new Modifier();
+            newModifier.Name = modifier.Name;
+            newModifier.Level = modifier.Level;
+            Modifiers.Add(newModifier);
+        }
+        //Debug.Log("Copiados mods: " + string.Join(",", Modifiers.ConvertAll(m => m.Name.ToString()).ToArray()));
+
+        Powers.Clear();
+        foreach (Power power in zOrigin.Powers)
+        {
+            Power newPower = new Power();
+            newPower.Name = power.Name;
+            newPower.Level = power.Level;
+            newPower.Description = power.Description;
+            //todo: probablemente más cosas que añadir aquí??
+            Powers.Add(newPower);
+        }
+
+        Catharsis = zOrigin.Catharsis;
+
+        Notes = zOrigin.Notes;
+    }
+
+    public static string Serialize(Profile zOrigin)
+    {
+        return zOrigin.ToXML();
+    }
+
+    public static Profile Deserialize(string filepath)
+    {
+        Profile profile = new Profile();
+        XmlSerializer ser = new XmlSerializer((typeof(Profile)));
+        TextReader reader = new StringReader(System.IO.File.ReadAllText(filepath));
+        return (Profile)ser.Deserialize(reader);
+    }
+
+    public string ToXML()
+    {
+        XmlSerializer ser = new XmlSerializer(typeof(Profile));
+        StringWriter writer = new StringWriter();
+        ser.Serialize(writer, this);
+
+        return writer.ToString();
     }
 }

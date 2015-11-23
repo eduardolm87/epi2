@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AppManager : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class AppManager : MonoBehaviour
 
     public UIManager UIManager;
     public ReferenceManager ReferenceManager;
-
 
     void Start()
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Power : MonoBehaviour
+public class Power
 {
     public string Name = "";
     public int Level = 1;
