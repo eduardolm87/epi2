@@ -9,6 +9,9 @@ public class ReferenceManager : MonoBehaviour
     public List<Modifier> Modifiers = new List<Modifier>();
 
     [HideInInspector]
+    public List<Power> Powers = new List<Power>();
+
+    [HideInInspector]
     public List<Profile> DefaultProfiles = new List<Profile>();
 
     [HideInInspector]
@@ -19,15 +22,22 @@ public class ReferenceManager : MonoBehaviour
 
     public List<ProfileExample> ProfileReferences = new List<ProfileExample>();
 
+    public List<PowerExample> PowerReferences = new List<PowerExample>();
 
     public void LoadReferences()
     {
         Modifiers.Clear();
+        Powers.Clear();
         DefaultProfiles.Clear();
 
         foreach (ModifierExample modf in ModifierReferences)
         {
             Modifiers.Add(modf.Modifier);
+        }
+
+        foreach (PowerExample pow in PowerReferences)
+        {
+            Powers.Add(pow.Power);
         }
 
         foreach (ProfileExample prof in ProfileReferences)
@@ -74,6 +84,4 @@ public class ReferenceManager : MonoBehaviour
             }
         }
     }
-
-
 }

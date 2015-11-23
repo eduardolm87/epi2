@@ -199,7 +199,6 @@ public class Profile
             Power newPower = new Power();
             newPower.Name = power.Name;
             newPower.Level = power.Level;
-            newPower.Description = power.Description;
             //todo: probablemente más cosas que añadir aquí??
             Powers.Add(newPower);
         }
