@@ -89,4 +89,7 @@ public class Defines : MonoBehaviour
     public static string profilesFileExtension = "ep3";
     public static string profileWontBeSavedBecauseDefault = "Este perfil es de ejemplo. No se guardarán los cambios que hayas hecho.";
     public static string newProfileName = "Nuevo Personaje";
+    public static string levelName = "Nivel";
+    public static string description = "Descripción";
+    public static string additionalOptions = "Opciones adicionales";
 }

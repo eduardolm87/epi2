@@ -28,6 +28,6 @@ public class Powerentry : MonoBehaviour
 
     public void InfoButton()
     {
-
+        AppManager.Instance.UIManager.PopupManager.PowerDescriptorPopup.Open(Power);
     }
 }

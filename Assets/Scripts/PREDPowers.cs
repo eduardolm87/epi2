@@ -84,8 +84,6 @@ public class PREDPowers : MonoBehaviour
 
         AppManager.Instance.UIManager.PopupManager.PowerSelectorPopUp.Open(availablePowers, new Action<Power>(delegate(Power zPower)
             {
-                Debug.Log("Has elegido el poder " + zPower.Name);
-
                 ProfileEditor.CurrentlyEditingProfile.Powers.Add(zPower);
 
                 LoadPowersFromProfile();

@@ -22,7 +22,7 @@ public class PowerPickSlot : MonoBehaviour
 
     public void Refresh()
     {
-        Text.text = PowerExample.Power.Name + " (Level " + PowerExample.Power.Level + ")";
+        Text.text = PowerExample.Power.Name + " (" + Defines.levelName + " " + PowerExample.Power.Level.ToString() + ")";
 
         if (Selected)
         {
@@ -37,7 +37,7 @@ public class PowerPickSlot : MonoBehaviour
 
     public void InfoButton()
     {
-
+        AppManager.Instance.UIManager.PopupManager.PowerDescriptorPopup.Open(PowerExample.Power);
     }
 
     public void PickButton()

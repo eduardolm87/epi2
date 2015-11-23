@@ -51,4 +51,5 @@ public class UIManager : MonoBehaviour
             ProfileSelector.Close();
         }
     }
+
 }
