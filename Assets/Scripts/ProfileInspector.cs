@@ -16,6 +16,11 @@ public class ProfileInspector : MonoBehaviour
     public Text CAT;
     public Image Portrait;
 
+    public ChecksAttributes AttributesWindow;
+    public ChecksPowers PowersWindow;
+    public ChecksDamage DamagesWindow;
+
+
     public static Profile CurrentProfile = null;
 
     public void Open(Profile zProfileToOpen = null)
@@ -39,11 +44,14 @@ public class ProfileInspector : MonoBehaviour
         }
 
         AppManager.Instance.UIManager.StatusBar.Open();
+        AppManager.Instance.UIManager.StatusBar.Refresh();
     }
 
     public void Close()
     {
         SaveCurrentProfile();
+
+        CloseAllSubWindows();
 
         AppManager.Instance.UIManager.StatusBar.Close();
 
@@ -57,20 +65,17 @@ public class ProfileInspector : MonoBehaviour
 
     public void ButtonChecks()
     {
-        //todo
-
+        AttributesWindow.Open();
     }
 
     public void ButtonDamage()
     {
-        //todo
-
+        DamagesWindow.Open();
     }
 
     public void ButtonPowers()
     {
-        //todo
-
+        PowersWindow.Open();
     }
 
     public void ButtonRename()
@@ -190,5 +195,35 @@ public class ProfileInspector : MonoBehaviour
         IOManager.Instance.SaveProfile(CurrentProfile);
         AppManager.Instance.ReferenceManager.LoadUserProfiles();
         LoadProfile(CurrentProfile);
+    }
+
+    public void CloseAllSubWindows(GameObject Exception = null)
+    {
+        if (Exception != AttributesWindow)
+            AttributesWindow.Close();
+
+        if (Exception != PowersWindow)
+            PowersWindow.Close();
+
+        if (Exception != DamagesWindow)
+            DamagesWindow.Close();
+    }
+
+    public bool isAnySubwindowOpen
+    {
+        get
+        {
+            return (AttributesWindow.gameObject.activeInHierarchy || PowersWindow.gameObject.activeInHierarchy || DamagesWindow.gameObject.activeInHierarchy);
+        }
+    }
+
+    public void BackToProfileSelector()
+    {
+        CloseAllSubWindows();
+        AppManager.Instance.UIManager.CloseAllWindows(AppManager.Instance.UIManager.ProfileSelector.gameObject);
+        ProfileEditor.CurrentlyEditingProfile = null;
+        ProfileInspector.CurrentProfile = null;
+        AppManager.Instance.UIManager.PopupManager.LogPopup.Clear();
+        AppManager.Instance.UIManager.ProfileSelector.Open();
     }
 }

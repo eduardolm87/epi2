@@ -158,4 +158,7 @@ public class Defines : MonoBehaviour
     public static string profileOpenLog = "Perfil seleccionado.";
     public static int maxModifierLevel = 5;
     public static int minModifierLevel = -4;
+    public static string checksAttributes = "TIRADAS";
+    public static string checksPowers = "PRODIGIOS";
+    public static string checksDamages = "DAÑO";
 }

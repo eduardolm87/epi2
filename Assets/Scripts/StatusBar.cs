@@ -10,8 +10,6 @@ public class StatusBar : MonoBehaviour
     public void Open()
     {
         gameObject.SetActive(true);
-
-        Text.text = ProfileInspector.CurrentProfile.Name ?? "???";
     }
 
     public void Close()
@@ -19,12 +17,37 @@ public class StatusBar : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void Refresh()
+    {
+        string name = ProfileInspector.CurrentProfile.Name ?? "???";
+        if (!AppManager.Instance.UIManager.ProfileInspector.isAnySubwindowOpen)
+        {
+            Text.text = name;
+        }
+        else if (AppManager.Instance.UIManager.ProfileInspector.AttributesWindow.gameObject.activeInHierarchy)
+        {
+            Text.text = name + " > " + Defines.checksAttributes;
+        }
+        else if (AppManager.Instance.UIManager.ProfileInspector.PowersWindow.gameObject.activeInHierarchy)
+        {
+            Text.text = name + " > " + Defines.checksPowers;
+        }
+        else if (AppManager.Instance.UIManager.ProfileInspector.DamagesWindow.gameObject.activeInHierarchy)
+        {
+            Text.text = name + " > " + Defines.checksDamages;
+        }
+    }
+
     public void BackButton()
     {
-        AppManager.Instance.UIManager.CloseAllWindows(AppManager.Instance.UIManager.ProfileSelector.gameObject);
-        ProfileEditor.CurrentlyEditingProfile = null;
-        ProfileInspector.CurrentProfile = null;
-        AppManager.Instance.UIManager.PopupManager.LogPopup.Clear();
-        AppManager.Instance.UIManager.ProfileSelector.Open();
+        if (AppManager.Instance.UIManager.ProfileInspector.isAnySubwindowOpen)
+        {
+            AppManager.Instance.UIManager.ProfileInspector.CloseAllSubWindows();
+            AppManager.Instance.UIManager.StatusBar.Refresh();
+        }
+        else
+        {
+            AppManager.Instance.UIManager.ProfileInspector.BackToProfileSelector();
+        }
     }
 }
