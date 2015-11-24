@@ -106,4 +106,5 @@ public class Defines : MonoBehaviour
     public static string additionalOptions = "Opciones adicionales";
     public static string health = "SALUD";
     public static string catharsis = "CATARSIS";
+    public static string experience = "EXPERIENCIA";
 }

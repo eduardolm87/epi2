@@ -113,6 +113,11 @@ public class ProfileInspector : MonoBehaviour
         }
     }
 
+    public void ButtonLog()
+    {
+        //todo
+    }
+
     void LoadDefaultProfile()
     {
         LoadProfile(AppManager.Instance.ReferenceManager.DefaultProfiles.First());
@@ -128,9 +133,9 @@ public class ProfileInspector : MonoBehaviour
     void RefreshInspector()
     {
         Name.text = CurrentProfile.Name;
-        EXP.text = "EXPERIENCIA: " + CurrentProfile.Experience.ToString();
-        Cat.text = "CATARSIS: " + CurrentProfile.Catharsis.ToString();
-        Health.text = "SALUD: " + Defines.HealthLevelToString(CurrentProfile.Health);
+        EXP.text = Defines.experience + ": " + CurrentProfile.Experience.ToString();
+        Cat.text = Defines.catharsis + ": " + CurrentProfile.Catharsis.ToString();
+        Health.text = Defines.HealthLevelToString(CurrentProfile.Health);
         //todo: portrait
     }
 
