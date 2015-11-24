@@ -112,7 +112,7 @@ public class PopupModifiersEditor : MonoBehaviour
 
     public void ChangeLevel(int zQuantity)
     {
-        ModifierFinalLevel = Mathf.Clamp(ModifierFinalLevel + zQuantity, -10, 10);
+        ModifierFinalLevel = Mathf.Clamp(ModifierFinalLevel + zQuantity, Defines.minModifierLevel, Defines.maxModifierLevel);
         RefreshLevel();
     }
 

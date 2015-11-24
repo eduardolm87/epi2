@@ -31,6 +31,8 @@ public class ProfilePreview : MonoBehaviour
         refreshing = true;
 
         int actualEXP = ProfileEditor.CurrentlyEditingProfile.Experience;
+        float numberChangeSpeed = 0.05f;
+
         while (oldEXP != actualEXP && refreshing)
         {
             if (oldEXP < actualEXP)
@@ -39,7 +41,10 @@ public class ProfilePreview : MonoBehaviour
                 oldEXP -= 1;
 
             EXPCAT.text = "EXP: " + "<color=" + ColorHEXWhenReloading + ">" + oldEXP.ToString() + "</color>";
-            yield return new WaitForSeconds(0.05f);
+
+            int difference = Mathf.Abs(oldEXP - actualEXP);
+            if (difference < 10)
+                yield return new WaitForSeconds(0.025f);
         }
 
         oldEXP = actualEXP;

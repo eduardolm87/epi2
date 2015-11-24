@@ -52,16 +52,24 @@ public class Profile
             int expfinal = 0;
 
             //Reglas de la experiencia aqui 
-            
-            //todo: FAKES
 
-            expfinal += Powers.Count * 10;
-            expfinal += Modifiers.Count * 5;
-            expfinal += (int)Vigor * 2;
-            expfinal += (int)Dexterity * 2;
-            expfinal += (int)Intelect * 2;
-            expfinal += (int)Presence * 2;
+            //Attributes
+            expfinal += Defines.GetExperienceCost(Vigor);
+            expfinal += Defines.GetExperienceCost(Dexterity);
+            expfinal += Defines.GetExperienceCost(Intelect);
+            expfinal += Defines.GetExperienceCost(Presence);
 
+            //Modifiers
+            foreach (Modifier modifier in Modifiers)
+            {
+                expfinal += Defines.GetExperienceCostModifier(modifier.Level);
+            }
+
+            //Powers
+            foreach (Power power in Powers)
+            {
+                expfinal += Defines.GetExperienceCostPower(power.Level);
+            }
 
             return expfinal;
         }

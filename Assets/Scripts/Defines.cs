@@ -9,6 +9,7 @@ public enum DAMAGELOCATIONS { INDETERMINADO = 0, EXTREMIDAD = 1, SUPERFICIAL = 2
 public enum DAMAGENATURES { ABRASION = 0, PERFORACION = 1, CORTE = 2, IMPACTO = 3 };
 
 
+
 public class Defines : MonoBehaviour
 {
     public static string HealthLevelToString(HEALTHLEVELS zHealthLevel)
@@ -86,6 +87,50 @@ public class Defines : MonoBehaviour
     public static bool AdviceForOverwritingExamplesDisplayed = false;
 
 
+    public static int GetExperienceCost(ATTRIBUTELEVELS zLevel)
+    {
+        switch (zLevel)
+        {
+            case ATTRIBUTELEVELS.PESIMO: return 0;
+            case ATTRIBUTELEVELS.POBRE: return 1;
+            case ATTRIBUTELEVELS.MEDIOCRE: return 3;
+            case ATTRIBUTELEVELS.COMPETENTE: return 8;
+            case ATTRIBUTELEVELS.EXCELENTE: return 20;
+            case ATTRIBUTELEVELS.PRODIGIOSO: return 50;
+        }
+        return 0;
+    }
+
+    public static int GetExperienceCostModifier(int zModifierLevel)
+    {
+        switch (zModifierLevel)
+        {
+            case 1: return 3;
+            case 2: return 5;
+            case 3: return 7;
+            case 4: return 9;
+            case 5: return 13;
+
+            case -1: return -3;
+            case -2: return -5;
+            case -3: return -7;
+            case -4: return -9;
+        }
+        return 0;
+    }
+
+    public static int GetExperienceCostPower(int zPowerLevel)
+    {
+        switch (zPowerLevel)
+        {
+            case 1: return 4;
+            case 2: return 7;
+            case 3: return 11;
+            case 4: return 16;
+        }
+        return 0;
+    }
+
 
     public static string defaultModifierName = "Nuevo";
     public static int defaultModifierLevel = 1;
@@ -111,4 +156,6 @@ public class Defines : MonoBehaviour
     public static string cathAbbreviation = "CAT";
     public static string newProfileGenericLog = "Nuevo perfil creado.";
     public static string profileOpenLog = "Perfil seleccionado.";
+    public static int maxModifierLevel = 5;
+    public static int minModifierLevel = -4;
 }
