@@ -11,6 +11,7 @@ public class StatusBar : MonoBehaviour
     {
         gameObject.SetActive(true);
 
+        Text.text = ProfileInspector.CurrentProfile.Name ?? "???";
     }
 
     public void Close()

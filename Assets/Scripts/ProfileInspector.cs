@@ -19,8 +19,6 @@ public class ProfileInspector : MonoBehaviour
     {
         AppManager.Instance.UIManager.CloseAllWindows(gameObject, AppManager.Instance.UIManager.StatusBar.gameObject);
 
-        AppManager.Instance.UIManager.StatusBar.Open();
-
         gameObject.SetActive(true);
 
         if (CurrentProfile == null || (zProfileToOpen != null && zProfileToOpen != CurrentProfile))
@@ -36,6 +34,8 @@ public class ProfileInspector : MonoBehaviour
         {
             LoadProfile(zProfileToOpen);
         }
+
+        AppManager.Instance.UIManager.StatusBar.Open();
     }
 
     public void Close()

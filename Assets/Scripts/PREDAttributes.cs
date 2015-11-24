@@ -4,6 +4,9 @@ using System.Collections;
 
 public class PREDAttributes : MonoBehaviour
 {
+    public HealthBar HealthBar;
+    public CatharsisBar CatharsisBar;
+
     public AttributeBar VigorBar;
     public AttributeBar DexterityBar;
     public AttributeBar IntelectBar;
@@ -25,7 +28,8 @@ public class PREDAttributes : MonoBehaviour
     void Refresh()
     {
         //Status
-
+        HealthBar.SetValue(ProfileEditor.CurrentlyEditingProfile.Health);
+        CatharsisBar.SetValue(ProfileEditor.CurrentlyEditingProfile.Catharsis);
 
         //Attributes
         VigorBar.SetValue(ProfileEditor.CurrentlyEditingProfile.Vigor);
