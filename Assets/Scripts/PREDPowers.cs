@@ -88,7 +88,6 @@ public class PREDPowers : MonoBehaviour
                 ProfileEditor.CurrentlyEditingProfile.Powers.Add(zPower);
 
                 AppManager.Instance.UIManager.ProfileEditor.Refresh();
-                AppManager.Instance.UIManager.ProfileEditor.Powers.LoadPowersFromProfile();
 
                 LoadPowersFromProfile();
             }));
