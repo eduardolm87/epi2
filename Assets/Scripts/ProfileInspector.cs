@@ -8,9 +8,12 @@ using System;
 public class ProfileInspector : MonoBehaviour
 {
     public Text Name;
+    public Text EXPtitle;
     public Text EXP;
-    public Text Cat;
+    public Text Healthtitle;
     public Text Health;
+    public Text CATtitle;
+    public Text CAT;
     public Image Portrait;
 
     public static Profile CurrentProfile = null;
@@ -133,9 +136,16 @@ public class ProfileInspector : MonoBehaviour
     void RefreshInspector()
     {
         Name.text = CurrentProfile.Name;
-        EXP.text = Defines.experience + ": " + CurrentProfile.Experience.ToString();
-        Cat.text = Defines.catharsis + ": " + CurrentProfile.Catharsis.ToString();
+
+        EXPtitle.text = Defines.experience;
+        EXP.text = CurrentProfile.Experience.ToString();
+
+        Healthtitle.text = Defines.health;
         Health.text = Defines.HealthLevelToString(CurrentProfile.Health);
+
+        CATtitle.text = Defines.catharsis;
+        CAT.text = CurrentProfile.Catharsis.ToString();
+
         //todo: portrait
     }
 

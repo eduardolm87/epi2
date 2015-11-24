@@ -107,4 +107,6 @@ public class Defines : MonoBehaviour
     public static string health = "SALUD";
     public static string catharsis = "CATARSIS";
     public static string experience = "EXPERIENCIA";
+    public static string expAbbreviation = "EXP";
+    public static string cathAbbreviation = "CAT";
 }
