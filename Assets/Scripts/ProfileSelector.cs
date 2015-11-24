@@ -116,6 +116,9 @@ public class ProfileSelector : MonoBehaviour
 
             AppManager.Instance.UIManager.ProfileInspector.LoadProfile(newProfile);
             AppManager.Instance.UIManager.ProfileEditor.Open();
+
+            LogPopup.AddNewMessage(new LogMessage(DateTime.Now, AppManager.Instance.UIManager.PopupManager.LogPopup.NoteColor, zInput, Defines.newProfileGenericLog));
+
         }));
     }
 }

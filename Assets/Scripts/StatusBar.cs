@@ -24,6 +24,7 @@ public class StatusBar : MonoBehaviour
         AppManager.Instance.UIManager.CloseAllWindows(AppManager.Instance.UIManager.ProfileSelector.gameObject);
         ProfileEditor.CurrentlyEditingProfile = null;
         ProfileInspector.CurrentProfile = null;
+        AppManager.Instance.UIManager.PopupManager.LogPopup.Clear();
         AppManager.Instance.UIManager.ProfileSelector.Open();
     }
 }

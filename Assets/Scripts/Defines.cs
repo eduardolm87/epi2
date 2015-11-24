@@ -109,4 +109,6 @@ public class Defines : MonoBehaviour
     public static string experience = "EXPERIENCIA";
     public static string expAbbreviation = "EXP";
     public static string cathAbbreviation = "CAT";
+    public static string newProfileGenericLog = "Nuevo perfil creado.";
+    public static string profileOpenLog = "Perfil seleccionado.";
 }

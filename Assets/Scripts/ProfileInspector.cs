@@ -118,7 +118,7 @@ public class ProfileInspector : MonoBehaviour
 
     public void ButtonLog()
     {
-        //todo
+        AppManager.Instance.UIManager.PopupManager.LogPopup.Open();
     }
 
     void LoadDefaultProfile()

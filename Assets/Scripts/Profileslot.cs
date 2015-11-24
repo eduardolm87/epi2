@@ -12,6 +12,7 @@ public class Profileslot : MonoBehaviour
     public void ClickToEdit()
     {
         AppManager.Instance.UIManager.ProfileInspector.Open(Profile);
+        LogPopup.AddNewMessage(new LogMessage(System.DateTime.Now, AppManager.Instance.UIManager.PopupManager.LogPopup.NoteColor, Profile.Name, Defines.profileOpenLog));
     }
 
     public void Assign(Profile zProfile)
