@@ -54,6 +54,8 @@ public class ChecksPowers : MonoBehaviour
             Debug.LogError("Error reading power " + ProfileInspector.CurrentProfile.Powers[0].Name + " from profile.");
             ChangeSelectedPowerButton();
         }
+
+        
     }
 
     public void Close()
@@ -70,8 +72,14 @@ public class ChecksPowers : MonoBehaviour
     {
         SelectedPowerExample = zPowerExample;
         ChosenPowerLabel.text = SelectedPowerExample.Power.Name;
-        ComplexityInput.Complexity = 0;
+
         RemoveAllAddOptions();
+
+        //AddOptsLoaded.ForEach(x => x.Checked = false);
+        ComplexityInput.Complexity = 0;
+        ComplexityInput.MinComplexity = -10;
+        ComplexityInput.MaxComplexity = 10;
+
         LoadAddOptions();
     }
 

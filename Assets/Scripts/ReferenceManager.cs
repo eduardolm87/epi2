@@ -9,6 +9,9 @@ public class ReferenceManager : MonoBehaviour
     public List<Modifier> Modifiers = new List<Modifier>();
 
     [HideInInspector]
+    public List<SituationalModifier> SituationalModifiers = new List<SituationalModifier>();
+
+    [HideInInspector]
     public List<Power> Powers = new List<Power>();
 
     [HideInInspector]
@@ -17,6 +20,7 @@ public class ReferenceManager : MonoBehaviour
     [HideInInspector]
     public List<Profile> UserProfiles = new List<Profile>();
 
+    public SituationalModifierExample SituationalModifiersReference;
 
     public List<ModifierExample> ModifierReferences = new List<ModifierExample>();
 
@@ -24,9 +28,11 @@ public class ReferenceManager : MonoBehaviour
 
     public List<PowerExample> PowerReferences = new List<PowerExample>();
 
+
     public void LoadReferences()
     {
         Modifiers.Clear();
+        SituationalModifiers.Clear();
         Powers.Clear();
         DefaultProfiles.Clear();
 
@@ -44,6 +50,8 @@ public class ReferenceManager : MonoBehaviour
         {
             DefaultProfiles.Add(prof.Profile);
         }
+
+        SituationalModifiers = SituationalModifiersReference.SituationalModifiers;
 
         LoadUserProfiles();
     }
