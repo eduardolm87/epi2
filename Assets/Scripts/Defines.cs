@@ -161,4 +161,5 @@ public class Defines : MonoBehaviour
     public static string checksAttributes = "TIRADAS";
     public static string checksPowers = "PRODIGIOS";
     public static string checksDamages = "DAÑO";
+    public static string noPowers = "Este perfil no tiene Prodigios que lanzar.";
 }

@@ -75,7 +75,11 @@ public class ProfileInspector : MonoBehaviour
 
     public void ButtonPowers()
     {
-        PowersWindow.Open();
+        if (CurrentProfile.Powers.Count > 0)
+            PowersWindow.Open();
+        else
+            AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.noPowers, new List<PopupButton>());
+
     }
 
     public void ButtonRename()
@@ -219,6 +223,9 @@ public class ProfileInspector : MonoBehaviour
 
     public void BackToProfileSelector()
     {
+        //Things to do when closing a profile
+
+        PowersWindow.ClearLastlyUsedPower();
         CloseAllSubWindows();
         AppManager.Instance.UIManager.CloseAllWindows(AppManager.Instance.UIManager.ProfileSelector.gameObject);
         ProfileEditor.CurrentlyEditingProfile = null;
