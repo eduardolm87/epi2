@@ -66,7 +66,29 @@ public class Defines : MonoBehaviour
         return "???";
     }
 
-    //todo: daños
+    public static string DamageNatureToString(DAMAGENATURES zNature)
+    {
+        switch (zNature)
+        {
+            case DAMAGENATURES.ABRASION: return "ABRASION";
+            case DAMAGENATURES.CORTE: return "CORTE";
+            case DAMAGENATURES.IMPACTO: return "IMPACTO";
+            case DAMAGENATURES.PERFORACION: return "PERFORACION";
+        }
+        return "???";
+    }
+
+    public static string DamageLocationToString(DAMAGELOCATIONS zLocation)
+    {
+        switch (zLocation)
+        {
+            case DAMAGELOCATIONS.INDETERMINADO: return "INDETERMINADO";
+            case DAMAGELOCATIONS.EXTREMIDAD: return "EXTREMIDAD";
+            case DAMAGELOCATIONS.PUNTOVITAL: return "PUNTO VITAL";
+            case DAMAGELOCATIONS.SUPERFICIAL: return "SUPERFICIAL";
+        }
+        return "???";
+    }
 
     public static string FormatComplexityNumber(int zLevel)
     {
