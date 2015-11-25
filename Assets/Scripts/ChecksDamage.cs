@@ -2,14 +2,19 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ChecksDamage : MonoBehaviour
 {
     public Color SelectedSlotColor;
+    public ToggleGroup IntensityToggleGroup;
 
     public List<DmgNatureSelector> NatureSlots = new List<DmgNatureSelector>();
     public List<DmgLocationSelector> LocationSlots = new List<DmgLocationSelector>();
+    public List<Toggle> IntensityToggles = new List<Toggle>();
 
+
+    int IntensitySelected = 1;
 
     public void Open()
     {
@@ -41,7 +46,6 @@ public class ChecksDamage : MonoBehaviour
         }
     }
 
-
     public void SelectLocation(DmgLocationSelector zSelector)
     {
         foreach (DmgLocationSelector selector in LocationSlots)
@@ -57,4 +61,14 @@ public class ChecksDamage : MonoBehaviour
         }
     }
 
+    public int GetIntensitySelected()
+    {
+        return IntensityToggles.FindIndex(t => t.isOn) + 1;
+    }
+
+    public void Throw()
+    {
+       
+
+    }
 }
