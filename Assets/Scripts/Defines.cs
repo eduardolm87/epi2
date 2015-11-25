@@ -162,4 +162,6 @@ public class Defines : MonoBehaviour
     public static string checksPowers = "PRODIGIOS";
     public static string checksDamages = "DAÑO";
     public static string noPowers = "Este perfil no tiene Prodigios que lanzar.";
+    public static string dexteritySituationalModifier = "Se aplica cuando el personaje está intentando apuntar para impactar a un objetivo que tiene Destreza ";
+    public static string dexteritySituationalModifierTitle = "Acertar a objetivo con DES ";
 }

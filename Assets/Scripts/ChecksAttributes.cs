@@ -32,7 +32,6 @@ public class ChecksAttributes : MonoBehaviour
         ComplexityInput.Complexity = 0;
         ComplexityInput.MinComplexity = -10;
         ComplexityInput.MaxComplexity = 10;
-
     }
 
     public void Close()
@@ -55,7 +54,47 @@ public class ChecksAttributes : MonoBehaviour
         }
 
         //Special situational modifiers
-        //todo
+        RemoveSpecialSituationalModifiers();
+        AddSpecialSituationalModifiers();
+    }
+
+    void AddSpecialSituationalModifiers()
+    {
+        ATTRIBUTELEVELS DexLevel = ProfileInspector.CurrentProfile.Dexterity;
+        int difference = (int)ATTRIBUTELEVELS.PRODIGIOSO - (int)DexLevel;
+
+        for (int i = 1; i <= difference; i++)
+        {
+            ATTRIBUTELEVELS NextDexLevel = (ATTRIBUTELEVELS)((int)DexLevel + i);
+            AddSpecialSituationalModifier(NextDexLevel, -i);
+        }
+    }
+
+    void AddSpecialSituationalModifier(ATTRIBUTELEVELS zLevel, int zDifficulty)
+    {
+        GameObject entryObj = Instantiate(SituationalModifierSlotPrefab.gameObject) as GameObject;
+        entryObj.transform.SetParent(SituationalModifiersList);
+        entryObj.transform.localScale = SituationalModifierSlotPrefab.transform.localScale;
+
+        SituationalModifierSlot entry = entryObj.GetComponent<SituationalModifierSlot>();
+
+        SituationalModifier newSituationalModifier = new SituationalModifier();
+        newSituationalModifier.Name = Defines.dexteritySituationalModifierTitle + Defines.AttributeLevelToString(zLevel);
+        newSituationalModifier.Difficulty = zDifficulty;
+        newSituationalModifier.Description = Defines.dexteritySituationalModifier + Defines.AttributeLevelToString(zLevel);
+
+        entry.Assign(newSituationalModifier);
+
+        SpecialSituationalModifierEntries.Add(entry);
+    }
+
+    void RemoveSpecialSituationalModifiers()
+    {
+        while (SpecialSituationalModifierEntries.Count > 0)
+        {
+            Destroy(SpecialSituationalModifierEntries[0].gameObject);
+            SpecialSituationalModifierEntries.RemoveAt(0);
+        }
     }
 
     void AddSituationalModifier(SituationalModifier zSituationalModifier)
