@@ -173,6 +173,8 @@ public class ProfileInspector : MonoBehaviour
                 if (!Defines.AdviceForOverwritingExamplesDisplayed)
                 {
                     Defines.AdviceForOverwritingExamplesDisplayed = true;
+
+
                     //todo bug: esto no está saliendo, y debería
                     AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.profileWontBeSavedBecauseDefault, new List<PopupButton>());
                 }

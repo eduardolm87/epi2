@@ -11,11 +11,18 @@ using System;
 [XmlRoot("Profile")]
 public class Profile
 {
+    [XmlElement("ProfileVersion")]
+    [HideInInspector]
+    public int Version = 1;
+
     [XmlElement("Name")]
     public string Name = "";
 
     [XmlElement("Health")]
     public HEALTHLEVELS Health = HEALTHLEVELS.SANO;
+
+    [XmlElement("Catharsis")]
+    public int Catharsis = 0;
 
     [XmlElement("Vigor")]
     public ATTRIBUTELEVELS Vigor = ATTRIBUTELEVELS.POBRE;
@@ -40,8 +47,14 @@ public class Profile
     [XmlElement("Notes")]
     public string Notes = "";
 
-    [XmlElement("Catharsis")]
-    public int Catharsis = 0;
+    [XmlElement("Conduct")]
+    public string Conduct = "";
+
+    [XmlArray("Sequels")]
+    [XmlArrayItem("Sequel")]
+    public List<string> Sequels = new List<string>();
+
+
 
 
 
@@ -120,6 +133,18 @@ public class Profile
         if (Notes != zProfile.Notes)
             return false;
 
+        if (Conduct != zProfile.Conduct)
+            return false;
+
+        if (Sequels.Count != zProfile.Sequels.Count)
+            return false;
+
+        for (int i = 0; i < Sequels.Count; i++)
+        {
+            if (Sequels[i] != zProfile.Sequels[i])
+                return false;
+        }
+
         if (Catharsis != zProfile.Catharsis)
             return false;
 
@@ -181,7 +206,6 @@ public class Profile
         }
     }
 
-
     public Profile()
     {
 
@@ -199,6 +223,7 @@ public class Profile
     {
         Name = zOrigin.Name;
         Health = zOrigin.Health;
+        Catharsis = zOrigin.Catharsis;
 
         Vigor = zOrigin.Vigor;
         Dexterity = zOrigin.Dexterity;
@@ -222,9 +247,15 @@ public class Profile
             Powers.Add(newPower);
         }
 
-        Catharsis = zOrigin.Catharsis;
-
         Notes = zOrigin.Notes;
+
+        Conduct = zOrigin.Conduct;
+
+        Sequels.Clear();
+        foreach (string sequel in zOrigin.Sequels)
+        {
+            Sequels.Add(sequel);
+        }
     }
 
     public static string Serialize(Profile zOrigin)

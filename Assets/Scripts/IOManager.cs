@@ -31,6 +31,8 @@ public class IOManager : MonoBehaviour
         string[] serializedProfile = new string[1];
         serializedProfile[0] = Profile.Serialize(zProfile);
 
+
+
         try
         {
             File.WriteAllLines(fullfilepath, serializedProfile);
