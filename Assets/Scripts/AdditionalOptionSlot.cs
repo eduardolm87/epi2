@@ -36,7 +36,11 @@ public class AdditionalOptionSlot : MonoBehaviour
             Handle.color = Color.gray;
         }
 
-        AppManager.Instance.UIManager.ProfileInspector.PowersWindow.RecalculateComplexity();
+        if (checked_)
+            AppManager.Instance.UIManager.ProfileInspector.PowersWindow.RecalculateComplexity(AdditionalOption.Difficulty);
+        else
+            AppManager.Instance.UIManager.ProfileInspector.PowersWindow.RecalculateComplexity(-AdditionalOption.Difficulty);
+
     }
 
     public void Assign(PowerExample.AdditionalOption zAdditionalOption)

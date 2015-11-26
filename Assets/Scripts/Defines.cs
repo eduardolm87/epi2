@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public enum ATTRIBUTES { VIGOR = 0, DESTREZA = 1, INTELECTO = 2, PRESENCIA = 3 };
 public enum ATTRIBUTELEVELS { PESIMO = 0, POBRE = 1, MEDIOCRE = 2, COMPETENTE = 3, EXCELENTE = 4, PRODIGIOSO = 5 };
@@ -107,6 +109,145 @@ public class Defines : MonoBehaviour
     }
 
     public static bool AdviceForOverwritingExamplesDisplayed = false;
+
+    public static ATTRIBUTELEVELS GetAttributesAverage(List<ATTRIBUTELEVELS> zListOfLevels)
+    {
+        int total = 0;
+
+        zListOfLevels.ForEach(l => total += (int)l);
+
+        int avg = Mathf.CeilToInt(total * 1f / zListOfLevels.Count);
+
+        avg = Mathf.Clamp(avg, (int)ATTRIBUTELEVELS.PESIMO, (int)ATTRIBUTELEVELS.PRODIGIOSO);
+
+        return (ATTRIBUTELEVELS)avg;
+    }
+
+
+    //Throw Rules and tables
+
+    public static SUCCESSLEVELS AttributesThrow(int zD20, int zComplexity, ATTRIBUTELEVELS zAttributesAverage)
+    {
+        if (zD20 == 1) return SUCCESSLEVELS.CATASTROFE;
+
+        int final = zD20 + zComplexity;
+
+
+        SUCCESSLEVELS result = SUCCESSLEVELS.FALLO;
+
+        switch (zAttributesAverage)
+        {
+            case ATTRIBUTELEVELS.PESIMO:
+                if (final <= 3) result = SUCCESSLEVELS.CATASTROFE;
+                else if (final <= 7) result = SUCCESSLEVELS.FRACASO;
+                else if (final <= 16) result = SUCCESSLEVELS.FALLO;
+                else if (final <= 19) result = SUCCESSLEVELS.ACIERTO;
+                else if (final <= 20) result = SUCCESSLEVELS.EXTRAORDINARIO;
+                else result = SUCCESSLEVELS.PERFECTO;
+                break;
+
+            case ATTRIBUTELEVELS.POBRE:
+                if (final <= 2) result = SUCCESSLEVELS.CATASTROFE;
+                else if (final <= 5) result = SUCCESSLEVELS.FRACASO;
+                else if (final <= 11) result = SUCCESSLEVELS.FALLO;
+                else if (final <= 18) result = SUCCESSLEVELS.ACIERTO;
+                else if (final <= 19) result = SUCCESSLEVELS.EXTRAORDINARIO;
+                else result = SUCCESSLEVELS.PERFECTO;
+                break;
+
+            case ATTRIBUTELEVELS.MEDIOCRE:
+                if (final <= 1) result = SUCCESSLEVELS.CATASTROFE;
+                else if (final <= 3) result = SUCCESSLEVELS.FRACASO;
+                else if (final <= 10) result = SUCCESSLEVELS.FALLO;
+                else if (final <= 17) result = SUCCESSLEVELS.ACIERTO;
+                else if (final <= 19) result = SUCCESSLEVELS.EXTRAORDINARIO;
+                else result = SUCCESSLEVELS.PERFECTO;
+                break;
+
+            case ATTRIBUTELEVELS.COMPETENTE:
+                if (final <= 1) result = SUCCESSLEVELS.CATASTROFE;
+                else if (final <= 3) result = SUCCESSLEVELS.FRACASO;
+                else if (final <= 8) result = SUCCESSLEVELS.FALLO;
+                else if (final <= 15) result = SUCCESSLEVELS.ACIERTO;
+                else if (final <= 18) result = SUCCESSLEVELS.EXTRAORDINARIO;
+                else result = SUCCESSLEVELS.PERFECTO;
+                break;
+
+            case ATTRIBUTELEVELS.EXCELENTE:
+                if (final <= 1) result = SUCCESSLEVELS.CATASTROFE;
+                else if (final <= 2) result = SUCCESSLEVELS.FRACASO;
+                else if (final <= 6) result = SUCCESSLEVELS.FALLO;
+                else if (final <= 13) result = SUCCESSLEVELS.ACIERTO;
+                else if (final <= 17) result = SUCCESSLEVELS.EXTRAORDINARIO;
+                else result = SUCCESSLEVELS.PERFECTO;
+                break;
+
+            case ATTRIBUTELEVELS.PRODIGIOSO:
+                if (final <= 1) result = SUCCESSLEVELS.CATASTROFE;
+                else if (final <= 2) result = SUCCESSLEVELS.FRACASO;
+                else if (final <= 5) result = SUCCESSLEVELS.FALLO;
+                else if (final <= 11) result = SUCCESSLEVELS.ACIERTO;
+                else if (final <= 16) result = SUCCESSLEVELS.EXTRAORDINARIO;
+                else result = SUCCESSLEVELS.PERFECTO;
+                break;
+        }
+
+        if (zD20 == 20)
+        {
+            if ((int)result < (int)SUCCESSLEVELS.ACIERTO)
+            {
+                result = SUCCESSLEVELS.ACIERTO;
+            }
+        }
+
+        return result;
+    }
+
+    public static SUCCESSLEVELS PowerThrow(int zFinalResult, int zPowerLevel)
+    {
+        zFinalResult = Mathf.Clamp(zFinalResult, 1, 20);
+
+        switch (zPowerLevel)
+        {
+            case 1:
+                if (zFinalResult == 1) return SUCCESSLEVELS.CATASTROFE;
+                if (zFinalResult == 2) return SUCCESSLEVELS.FRACASO; ;
+                if (zFinalResult <= 6) return SUCCESSLEVELS.FALLO;
+                if (zFinalResult <= 13) return SUCCESSLEVELS.ACIERTO;
+                if (zFinalResult <= 17) return SUCCESSLEVELS.EXTRAORDINARIO;
+                return SUCCESSLEVELS.PERFECTO;
+
+            case 2:
+                if (zFinalResult == 1) return SUCCESSLEVELS.CATASTROFE;
+                if (zFinalResult <= 3) return SUCCESSLEVELS.FRACASO; ;
+                if (zFinalResult <= 8) return SUCCESSLEVELS.FALLO;
+                if (zFinalResult <= 15) return SUCCESSLEVELS.ACIERTO;
+                if (zFinalResult <= 18) return SUCCESSLEVELS.EXTRAORDINARIO;
+                return SUCCESSLEVELS.PERFECTO;
+
+            case 3:
+                if (zFinalResult == 1) return SUCCESSLEVELS.CATASTROFE;
+                if (zFinalResult <= 3) return SUCCESSLEVELS.FRACASO; ;
+                if (zFinalResult <= 10) return SUCCESSLEVELS.FALLO;
+                if (zFinalResult <= 17) return SUCCESSLEVELS.ACIERTO;
+                if (zFinalResult <= 19) return SUCCESSLEVELS.EXTRAORDINARIO;
+                return SUCCESSLEVELS.PERFECTO;
+
+            case 4:
+                if (zFinalResult <= 2) return SUCCESSLEVELS.CATASTROFE;
+                if (zFinalResult <= 5) return SUCCESSLEVELS.FRACASO; ;
+                if (zFinalResult <= 11) return SUCCESSLEVELS.FALLO;
+                if (zFinalResult <= 18) return SUCCESSLEVELS.ACIERTO;
+                if (zFinalResult == 19) return SUCCESSLEVELS.EXTRAORDINARIO;
+                return SUCCESSLEVELS.PERFECTO;
+        }
+
+        return SUCCESSLEVELS.FALLO;
+    }
+
+
+
+
 
 
     public static int GetExperienceCost(ATTRIBUTELEVELS zLevel)

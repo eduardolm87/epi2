@@ -109,7 +109,7 @@ public class ChecksAttributes : MonoBehaviour
         SituationalModifierEntries.Add(entry);
     }
 
-    public void RecalculateComplexity()
+    public void RecalculateComplexity(int zChange = 0)
     {
         int accumulatedComplexity = 0;
 
@@ -143,6 +143,32 @@ public class ChecksAttributes : MonoBehaviour
             ComplexityInput.MaxComplexity = 10;
         }
 
-        ComplexityInput.Complexity = ComplexityInput.Complexity;
+
+
+        ComplexityInput.Complexity = ComplexityInput.Complexity + zChange;
+
+    }
+
+    List<ATTRIBUTES> GetInvolvedAttributes()
+    {
+        List<ATTRIBUTES> involved = new List<ATTRIBUTES>();
+
+        foreach (AttributeSelector selector in AttributeSelectors)
+        {
+            if (selector.Selected)
+            {
+                involved.Add(selector.Attribute);
+            }
+        }
+
+        return involved;
+    }
+
+    public void Throw()
+    {
+        List<ATTRIBUTES> involvedAttributes = GetInvolvedAttributes();
+
+        if (involvedAttributes.Count > 0)
+            AppManager.Instance.UIManager.ProfileInspector.ThrowAttributesCheck(involvedAttributes, ComplexityInput.Complexity);
     }
 }

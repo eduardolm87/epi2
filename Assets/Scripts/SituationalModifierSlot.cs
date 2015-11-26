@@ -39,7 +39,10 @@ public class SituationalModifierSlot : MonoBehaviour
             Handle.color = Color.gray;
         }
 
-        AppManager.Instance.UIManager.ProfileInspector.AttributesWindow.RecalculateComplexity();
+        if (checked_)
+            AppManager.Instance.UIManager.ProfileInspector.AttributesWindow.RecalculateComplexity(SituationalModifier.Difficulty);
+        else
+            AppManager.Instance.UIManager.ProfileInspector.AttributesWindow.RecalculateComplexity(-SituationalModifier.Difficulty);
     }
 
     public void Assign(SituationalModifier zSituationalModifier)

@@ -61,6 +61,16 @@ public class ChecksDamage : MonoBehaviour
         }
     }
 
+    DAMAGENATURES GetSelectedNature()
+    {
+        return NatureSlots.FirstOrDefault(x => x.Selected).Nature;
+    }
+
+    DAMAGELOCATIONS GetSelectedLocation()
+    {
+        return LocationSlots.FirstOrDefault(x => x.Selected).Location;
+    }
+
     public int GetIntensitySelected()
     {
         return IntensityToggles.FindIndex(t => t.isOn) + 1;
@@ -68,7 +78,6 @@ public class ChecksDamage : MonoBehaviour
 
     public void Throw()
     {
-       
-
+        AppManager.Instance.UIManager.ProfileInspector.ThrowDamageCheck(GetSelectedNature(), GetSelectedLocation(), GetIntensitySelected());
     }
 }

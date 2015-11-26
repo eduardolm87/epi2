@@ -233,4 +233,72 @@ public class ProfileInspector : MonoBehaviour
         AppManager.Instance.UIManager.PopupManager.LogPopup.Clear();
         AppManager.Instance.UIManager.ProfileSelector.Open();
     }
+
+
+
+
+    public void ThrowAttributesCheck(List<ATTRIBUTES> zAttributes, int zComplexity)
+    {
+        int d20 = UnityEngine.Random.Range(1, 21);
+
+
+
+        List<ATTRIBUTELEVELS> LevelsInvolved = new List<ATTRIBUTELEVELS>();
+        if (zAttributes.Contains(ATTRIBUTES.VIGOR)) { LevelsInvolved.Add(CurrentProfile.Vigor); }
+        if (zAttributes.Contains(ATTRIBUTES.DESTREZA)) { LevelsInvolved.Add(CurrentProfile.Dexterity); }
+        if (zAttributes.Contains(ATTRIBUTES.INTELECTO)) { LevelsInvolved.Add(CurrentProfile.Intelect); }
+        if (zAttributes.Contains(ATTRIBUTES.PRESENCIA)) { LevelsInvolved.Add(CurrentProfile.Presence); }
+
+        ATTRIBUTELEVELS Average = Defines.GetAttributesAverage(LevelsInvolved);
+
+        SUCCESSLEVELS successLevel = Defines.AttributesThrow(d20, zComplexity, Average);
+
+        ProcessTrowResult(new LogMessage(DateTime.Now, AppManager.Instance.UIManager.PopupManager.LogPopup.TestsColor,
+            "Tirada de atributos",
+            string.Join("+", zAttributes.ConvertAll(a => Defines.AttributeNameToString(a)).ToArray()) + "\nResultado: " + "<b>" + Defines.SuccessLevelToString(successLevel).ToUpper() + "</b>",
+            true
+            ));
+    }
+
+    public void ThrowPowerCheck(Power zPower, int zComplexity)
+    {
+        int d20 = UnityEngine.Random.Range(1, 21);
+        int expBonus = Mathf.FloorToInt(CurrentProfile.Experience / 50f);
+        int final = d20 + expBonus + zComplexity;
+
+        SUCCESSLEVELS successLevel = Defines.PowerThrow(final, zPower.Level);
+
+        ProcessTrowResult(new LogMessage(DateTime.Now, AppManager.Instance.UIManager.PopupManager.LogPopup.TestsColor,
+            "Lanza poder " + zPower.Name,
+            "Resultado: " + "<b>" + Defines.SuccessLevelToString(successLevel).ToUpper() + "</b>",
+            true
+            ));
+    }
+
+    public void ThrowDamageCheck(DAMAGENATURES zNature, DAMAGELOCATIONS zLocation, int zIntensity)
+    {
+
+
+
+
+        ProcessTrowResult(new LogMessage(DateTime.Now, AppManager.Instance.UIManager.PopupManager.LogPopup.DamageColor,
+            "Tirada de Daño",
+            "Sufre daños",
+            true
+            ));
+    }
+
+    void ProcessTrowResult(LogMessage zProcessedMessage)
+    {
+        LogPopup.AddNewMessage(zProcessedMessage);
+
+        CloseAllSubWindows();
+
+        //todo: algun popup guay con animacioncillas y tal
+
+        AppManager.Instance.UIManager.PopupManager.LogPopup.Open();
+
+    }
+
+
 }

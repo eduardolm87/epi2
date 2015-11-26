@@ -55,7 +55,7 @@ public class ChecksPowers : MonoBehaviour
             ChangeSelectedPowerButton();
         }
 
-        
+
     }
 
     public void Close()
@@ -139,7 +139,7 @@ public class ChecksPowers : MonoBehaviour
         }));
     }
 
-    public void RecalculateComplexity()
+    public void RecalculateComplexity(int zChange = 0)
     {
         int accumulatedComplexity = 0;
         foreach (AdditionalOptionSlot aoslot in AddOptsLoaded)
@@ -164,11 +164,14 @@ public class ChecksPowers : MonoBehaviour
             ComplexityInput.MaxComplexity = 10;
         }
 
-        ComplexityInput.Complexity = ComplexityInput.Complexity;
+
+        ComplexityInput.Complexity = ComplexityInput.Complexity + zChange;
+
     }
 
     public void Throw()
     {
-
+        if (SelectedPowerExample != null)
+            AppManager.Instance.UIManager.ProfileInspector.ThrowPowerCheck(SelectedPowerExample.Power, ComplexityInput.Complexity);
     }
 }
