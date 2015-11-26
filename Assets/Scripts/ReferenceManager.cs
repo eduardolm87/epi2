@@ -15,12 +15,17 @@ public class ReferenceManager : MonoBehaviour
     public List<Power> Powers = new List<Power>();
 
     [HideInInspector]
+    public List<Sequel> Sequels = new List<Sequel>();
+
+    [HideInInspector]
     public List<Profile> DefaultProfiles = new List<Profile>();
 
     [HideInInspector]
     public List<Profile> UserProfiles = new List<Profile>();
 
     public SituationalModifierExample SituationalModifiersReference;
+
+    public SequelExample SequelsReference;
 
     public List<ModifierExample> ModifierReferences = new List<ModifierExample>();
 
@@ -29,12 +34,14 @@ public class ReferenceManager : MonoBehaviour
     public List<PowerExample> PowerReferences = new List<PowerExample>();
 
 
+
     public void LoadReferences()
     {
         Modifiers.Clear();
         SituationalModifiers.Clear();
         Powers.Clear();
         DefaultProfiles.Clear();
+        Sequels.Clear();
 
         foreach (ModifierExample modf in ModifierReferences)
         {
@@ -52,6 +59,8 @@ public class ReferenceManager : MonoBehaviour
         }
 
         SituationalModifiers = SituationalModifiersReference.SituationalModifiers;
+
+        Sequels = SequelsReference.Sequels;
 
         LoadUserProfiles();
     }
