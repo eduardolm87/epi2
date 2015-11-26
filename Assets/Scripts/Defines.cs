@@ -245,7 +245,41 @@ public class Defines : MonoBehaviour
         return SUCCESSLEVELS.FALLO;
     }
 
+    public static int DamageLostThrow(SUCCESSLEVELS zFailure, int zIntensity)
+    {
+        switch (zFailure)
+        {
+            case SUCCESSLEVELS.FALLO:
+                switch (zIntensity)
+                {
+                    case 1: return 1;
+                    case 2: return 1;
+                    case 3: return 2;
+                    case 4: return 2;
+                }
+                break;
+            case SUCCESSLEVELS.FRACASO:
+                switch (zIntensity)
+                {
+                    case 1: return 1;
+                    case 2: return 2;
+                    case 3: return 3;
+                    case 4: return 4;
+                }
+                break;
+            case SUCCESSLEVELS.CATASTROFE:
+                switch (zIntensity)
+                {
+                    case 1: return 2;
+                    case 2: return 3;
+                    case 3: return 4;
+                    case 4: return 5;
+                }
+                break;
+        }
 
+        return 0;
+    }
 
 
 
@@ -327,4 +361,5 @@ public class Defines : MonoBehaviour
     public static string noPowers = "Este perfil no tiene Prodigios que lanzar.";
     public static string dexteritySituationalModifier = "Se aplica cuando el personaje está intentando apuntar para impactar a un objetivo que tiene Destreza ";
     public static string dexteritySituationalModifierTitle = "Acertar a objetivo con DES ";
+    public static string deadCharacterNoDamageSection = "El personaje está muerto.";
 }

@@ -70,7 +70,10 @@ public class ProfileInspector : MonoBehaviour
 
     public void ButtonDamage()
     {
-        DamagesWindow.Open();
+        if (CurrentProfile.Health != HEALTHLEVELS.MUERTO)
+            DamagesWindow.Open();
+        else
+            AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.deadCharacterNoDamageSection, new List<PopupButton>());
     }
 
     public void ButtonPowers()
@@ -241,8 +244,6 @@ public class ProfileInspector : MonoBehaviour
     {
         int d20 = UnityEngine.Random.Range(1, 21);
 
-
-
         List<ATTRIBUTELEVELS> LevelsInvolved = new List<ATTRIBUTELEVELS>();
         if (zAttributes.Contains(ATTRIBUTES.VIGOR)) { LevelsInvolved.Add(CurrentProfile.Vigor); }
         if (zAttributes.Contains(ATTRIBUTES.DESTREZA)) { LevelsInvolved.Add(CurrentProfile.Dexterity); }
@@ -268,28 +269,83 @@ public class ProfileInspector : MonoBehaviour
 
         SUCCESSLEVELS successLevel = Defines.PowerThrow(final, zPower.Level);
 
+        string message = "Resultado: " + "<b>" + Defines.SuccessLevelToString(successLevel).ToUpper() + "</b>";
+        if ((int)successLevel <= (int)SUCCESSLEVELS.FALLO)
+        {
+            CurrentProfile.Catharsis = Mathf.Clamp(CurrentProfile.Catharsis + 1, 1, 10);
+            message += "\n" + "Catarsis actual: " + CurrentProfile.Catharsis.ToString();
+        }
+
+
+
         ProcessTrowResult(new LogMessage(DateTime.Now, AppManager.Instance.UIManager.PopupManager.LogPopup.TestsColor,
             "Lanza poder " + zPower.Name,
-            "Resultado: " + "<b>" + Defines.SuccessLevelToString(successLevel).ToUpper() + "</b>",
+            message,
             true
             ));
     }
 
     public void ThrowDamageCheck(DAMAGENATURES zNature, DAMAGELOCATIONS zLocation, int zIntensity)
     {
+        int d20 = UnityEngine.Random.Range(1, 21);
+        int complexity = 0;
+        switch (zLocation)
+        {
+            case DAMAGELOCATIONS.SUPERFICIAL: complexity += 2; break;
+            case DAMAGELOCATIONS.PUNTOVITAL: complexity -= 3; break;
+            case DAMAGELOCATIONS.INDETERMINADO:
+            case DAMAGELOCATIONS.EXTREMIDAD:
+                break;
+        }
 
+        if (zIntensity <= 1)
+        {
+            complexity += 0;
+        }
+        else if (zIntensity <= 2)
+        {
+            complexity -= 1;
+        }
+        else if (zIntensity <= 3)
+        {
+            complexity -= 3;
+        }
+        else if (zIntensity <= 4)
+        {
+            complexity -= 5;
+        }
+
+        SUCCESSLEVELS successLevel = Defines.AttributesThrow(d20, complexity, CurrentProfile.Vigor);
+
+        Debug.Log("grado de exito en la tirada de vig: " + successLevel);
+
+        string message = "";
+        int damageLost = Defines.DamageLostThrow(successLevel, zIntensity);
+        if (damageLost < 1)
+        {
+            message = "Evita el daño.";
+        }
+        else
+        {
+
+            CurrentProfile.Health = (HEALTHLEVELS)(Mathf.Clamp(((int)CurrentProfile.Health - damageLost), (int)HEALTHLEVELS.MUERTO, (int)HEALTHLEVELS.SANO));
+            message = "Pierde " + damageLost + " niveles de salud.\nQueda en estado " + Defines.HealthLevelToString(CurrentProfile.Health);
+        }
 
 
 
         ProcessTrowResult(new LogMessage(DateTime.Now, AppManager.Instance.UIManager.PopupManager.LogPopup.DamageColor,
             "Tirada de Daño",
-            "Sufre daños",
+            message,
             true
             ));
     }
 
     void ProcessTrowResult(LogMessage zProcessedMessage)
     {
+        RefreshInspector();
+        SaveCurrentProfile();
+
         LogPopup.AddNewMessage(zProcessedMessage);
 
         CloseAllSubWindows();
