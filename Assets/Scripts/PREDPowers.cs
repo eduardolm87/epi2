@@ -87,6 +87,10 @@ public class PREDPowers : MonoBehaviour
             {
                 ProfileEditor.CurrentlyEditingProfile.Powers.Add(zPower);
 
+                if (ProfileEditor.CurrentlyEditingProfile.Catharsis < 1)
+                    ProfileEditor.CurrentlyEditingProfile.Catharsis = 1;
+
+
                 AppManager.Instance.UIManager.ProfileEditor.Refresh();
 
                 LoadPowersFromProfile();
