@@ -352,9 +352,10 @@ public class ProfileInspector : MonoBehaviour
 
         CloseAllSubWindows();
 
-        //todo: algun popup guay con animacioncillas y tal
 
-        AppManager.Instance.UIManager.PopupManager.LogPopup.Open();
+        AppManager.Instance.UIManager.PopupManager.LoadingPopup.Open();
+
+        //AppManager.Instance.UIManager.PopupManager.LogPopup.Open();
 
     }
 

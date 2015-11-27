@@ -38,7 +38,6 @@ public class PREDNotes : MonoBehaviour
     public void ChangeConduct()
     {
         ProfileEditor.CurrentlyEditingProfile.Conduct = Conduct.text;
-        Debug.Log("Cambia conducta a " + ProfileEditor.CurrentlyEditingProfile.Conduct);
     }
 
     public void ChangeNotes()

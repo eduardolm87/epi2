@@ -64,10 +64,7 @@ public class ProfilePreview : MonoBehaviour
     {
         ProfileInspector.CurrentProfile = ProfileEditor.CurrentlyEditingProfile;
 
-        Debug.Log("ProfileInspector.CurrentProfile.Conduct: " + ProfileInspector.CurrentProfile.Conduct);
         ProfileInspector.SaveCurrentProfile();
-
-        Debug.Log("Despues de salvar");
 
         AppManager.Instance.UIManager.ProfileEditor.Close();
         AppManager.Instance.UIManager.ProfileInspector.Open(ProfileInspector.CurrentProfile);

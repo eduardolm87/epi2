@@ -9,6 +9,7 @@ public class PopupManager : MonoBehaviour
     public PowerSelectorPopUp PowerSelectorPopUp;
     public PowerDescriptorPopup PowerDescriptorPopup;
     public LogPopup LogPopup;
+    public LoadingPopup LoadingPopup;
 
     public bool CanOpen
     {
@@ -26,6 +27,7 @@ public class PopupManager : MonoBehaviour
         PowerSelectorPopUp.Close();
         PowerDescriptorPopup.Close();
         LogPopup.Close();
+        LoadingPopup.Close();
     }
 
     public int NumberOfActivePopups
@@ -40,6 +42,7 @@ public class PopupManager : MonoBehaviour
             if (PowerSelectorPopUp.gameObject.activeInHierarchy) n++;
             if (PowerDescriptorPopup.gameObject.activeInHierarchy) n++;
             if (LogPopup.gameObject.activeInHierarchy) n++;
+            if (LoadingPopup.gameObject.activeInHierarchy) n++;
 
             return n;
         }
