@@ -3,17 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEngine.UI;
 
 public class ProfileSelector : MonoBehaviour
 {
+    public enum FOLDERS { USER = 0, EXAMPLES = 1 };
+
     public Profileslot ProfileSlotPrefab;
-    public Transform SelectorList;
+    public Transform UserFolderList;
+    public Transform ExamplesFolderList;
+
 
     public Color UserProfileColor = Color.gray;
     public Color DefaultProfileColor = Color.blue;
 
+    public Color UnselectedFolder;
+    public Color SelectedFolder;
+
+    public Image UserFolderSelector;
+    public Image ExamplesFolderSelector;
+
+    public ScrollRect MaskListSwapper;
+
+    public GameObject AddNewProfileButton;
+
+
+    [HideInInspector]
+    public FOLDERS CurrentlyOpenedFolder = FOLDERS.USER;
+
     [HideInInspector]
     public List<Profileslot> ProfileSlotsLoaded = new List<Profileslot>();
+
+    static bool firstTimeInTheApp = true;
 
 
     public void Open()
@@ -23,6 +44,20 @@ public class ProfileSelector : MonoBehaviour
         gameObject.SetActive(true);
 
         LoadAllProfiles();
+
+        if (firstTimeInTheApp)
+        {
+            if (ProfileSlotsLoaded.Any(p => !p.Profile.isDefaultProfile))
+            {
+                ChangeFolder(FOLDERS.USER);
+            }
+            else
+            {
+                ChangeFolder(FOLDERS.EXAMPLES);
+            }
+
+            firstTimeInTheApp = false;
+        }
     }
 
     public void Close()
@@ -87,7 +122,15 @@ public class ProfileSelector : MonoBehaviour
     void AddProfileToSelector(Profile zProfile)
     {
         GameObject entryObj = Instantiate(ProfileSlotPrefab.gameObject) as GameObject;
-        entryObj.transform.SetParent(SelectorList);
+        if (zProfile.isDefaultProfile)
+        {
+            entryObj.transform.SetParent(ExamplesFolderList);
+        }
+        else
+        {
+            entryObj.transform.SetParent(UserFolderList);
+        }
+
         entryObj.transform.localScale = ProfileSlotPrefab.transform.localScale;
 
         Profileslot entry = entryObj.GetComponent<Profileslot>();
@@ -120,5 +163,43 @@ public class ProfileSelector : MonoBehaviour
             LogPopup.AddNewMessage(new LogMessage(DateTime.Now, AppManager.Instance.UIManager.PopupManager.LogPopup.NoteColor, zInput, Defines.newProfileGenericLog));
 
         }));
+    }
+
+    public void SelectFolder(int zFolder)
+    {
+        FOLDERS wantToChange = (FOLDERS)zFolder;
+        if (CurrentlyOpenedFolder == wantToChange)
+            return;
+
+        ChangeFolder(wantToChange);
+    }
+
+    void ChangeFolder(FOLDERS zFolderToChange)
+    {
+        switch (zFolderToChange)
+        {
+            case FOLDERS.USER:
+                UserFolderSelector.color = SelectedFolder;
+                ExamplesFolderSelector.color = UnselectedFolder;
+
+                ExamplesFolderList.gameObject.SetActive(false);
+                UserFolderList.gameObject.SetActive(true);
+                MaskListSwapper.content = UserFolderList.GetComponent<RectTransform>();
+
+                AddNewProfileButton.gameObject.SetActive(true);
+                break;
+
+            case FOLDERS.EXAMPLES:
+                UserFolderSelector.color = UnselectedFolder;
+                ExamplesFolderSelector.color = SelectedFolder;
+
+                UserFolderList.gameObject.SetActive(false);
+                ExamplesFolderList.gameObject.SetActive(true);
+                MaskListSwapper.content = ExamplesFolderList.GetComponent<RectTransform>();
+                AddNewProfileButton.gameObject.SetActive(false);
+                break;
+        }
+
+        CurrentlyOpenedFolder = zFolderToChange;
     }
 }
