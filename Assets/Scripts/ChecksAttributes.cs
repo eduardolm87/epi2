@@ -16,6 +16,10 @@ public class ChecksAttributes : MonoBehaviour
     public Color SituationalModifiersCheckedColor;
     public Color AttributesSelectedColor;
 
+
+
+    List<SituationalModifierSlot> ProfileModifiers = new List<SituationalModifierSlot>();
+
     List<SituationalModifierSlot> SituationalModifierEntries = new List<SituationalModifierSlot>();
     List<SituationalModifierSlot> SpecialSituationalModifierEntries = new List<SituationalModifierSlot>();
 
@@ -44,6 +48,10 @@ public class ChecksAttributes : MonoBehaviour
         SituationalModifierEntries.ForEach(x => x.Checked = false);
         SpecialSituationalModifierEntries.ForEach(x => x.Checked = false);
 
+        //Profile modifiers
+        RemoveProfileModifiers();
+        AddProfileModifiers();
+
         //Common situational modifiers
         foreach (SituationalModifier smod in AppManager.Instance.ReferenceManager.SituationalModifiers)
         {
@@ -56,6 +64,48 @@ public class ChecksAttributes : MonoBehaviour
         //Special situational modifiers
         RemoveSpecialSituationalModifiers();
         AddSpecialSituationalModifiers();
+    }
+
+    void RemoveProfileModifiers()
+    {
+        while (ProfileModifiers.Count > 0)
+        {
+            Destroy(ProfileModifiers[0].gameObject);
+            ProfileModifiers.RemoveAt(0);
+        }
+    }
+
+    void AddProfileModifiers()
+    {
+        foreach (Modifier modifier in ProfileInspector.CurrentProfile.Modifiers)
+        {
+            AddNewProfileModifier(modifier);
+        }
+    }
+
+    void AddNewProfileModifier(Modifier zModifier)
+    {
+        ModifierExample modifierReference = AppManager.Instance.ReferenceManager.ModifierReferences.FirstOrDefault(m => m.Modifier.Name == zModifier.Name);
+        if (modifierReference == null)
+            return;
+
+
+        GameObject entryObj = Instantiate(SituationalModifierSlotPrefab.gameObject) as GameObject;
+        entryObj.transform.SetParent(SituationalModifiersList);
+        entryObj.transform.SetAsFirstSibling();
+        entryObj.transform.localScale = SituationalModifierSlotPrefab.transform.localScale;
+
+        SituationalModifierSlot entry = entryObj.GetComponent<SituationalModifierSlot>();
+
+        
+        SituationalModifier modifierData = new SituationalModifier();
+        modifierData.Name = modifierReference.Modifier.Name;
+        modifierData.Difficulty = zModifier.Level;
+        modifierData.Description = modifierReference.Description;
+
+
+        entry.Assign(modifierData);
+        ProfileModifiers.Add(entry);
     }
 
     void AddSpecialSituationalModifiers()
