@@ -37,7 +37,7 @@ public class AttributeBar : MonoBehaviour
             case ATTRIBUTES.DESTREZA:
                 ProfileEditor.CurrentlyEditingProfile.Dexterity = level;
                 break;
-            case ATTRIBUTES.INTELECTO:
+            case ATTRIBUTES.INTELIGENCIA:
                 ProfileEditor.CurrentlyEditingProfile.Intelect = level;
                 break;
             case ATTRIBUTES.PRESENCIA:

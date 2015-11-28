@@ -249,7 +249,7 @@ public class ProfileInspector : MonoBehaviour
         List<ATTRIBUTELEVELS> LevelsInvolved = new List<ATTRIBUTELEVELS>();
         if (zAttributes.Contains(ATTRIBUTES.VIGOR)) { LevelsInvolved.Add(CurrentProfile.Vigor); }
         if (zAttributes.Contains(ATTRIBUTES.DESTREZA)) { LevelsInvolved.Add(CurrentProfile.Dexterity); }
-        if (zAttributes.Contains(ATTRIBUTES.INTELECTO)) { LevelsInvolved.Add(CurrentProfile.Intelect); }
+        if (zAttributes.Contains(ATTRIBUTES.INTELIGENCIA)) { LevelsInvolved.Add(CurrentProfile.Intelect); }
         if (zAttributes.Contains(ATTRIBUTES.PRESENCIA)) { LevelsInvolved.Add(CurrentProfile.Presence); }
 
         ATTRIBUTELEVELS Average = Defines.GetAttributesAverage(LevelsInvolved);

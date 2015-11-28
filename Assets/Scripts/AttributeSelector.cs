@@ -36,7 +36,7 @@ public class AttributeSelector : MonoBehaviour
             case ATTRIBUTES.DESTREZA:
                 value = ProfileInspector.CurrentProfile.Dexterity;
                 break;
-            case ATTRIBUTES.INTELECTO:
+            case ATTRIBUTES.INTELIGENCIA:
                 value = ProfileInspector.CurrentProfile.Intelect;
                 break;
             case ATTRIBUTES.PRESENCIA:
