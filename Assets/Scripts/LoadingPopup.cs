@@ -14,6 +14,9 @@ public class LoadingPopup : MonoBehaviour
 
         WaitingTime = WaitingTime * UnityEngine.Random.Range(0.75f, 2f);
 
+        AppManager.Instance.SoundManager.Play("IntroLoading");
+
+
         Invoke("Finish", WaitingTime);
     }
 

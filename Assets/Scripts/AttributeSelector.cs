@@ -20,6 +20,8 @@ public class AttributeSelector : MonoBehaviour
 
     public void Clicked()
     {
+        AppManager.Instance.SoundManager.Play("OptionPick");
+
         Selected = !Selected;
         Refresh();
     }

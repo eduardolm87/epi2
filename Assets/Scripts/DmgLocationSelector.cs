@@ -35,6 +35,7 @@ public class DmgLocationSelector : MonoBehaviour
 
     public void Clicked()
     {
+        AppManager.Instance.SoundManager.Play("OptionPick");
         AppManager.Instance.UIManager.ProfileInspector.DamagesWindow.SelectLocation(this);
     }
 

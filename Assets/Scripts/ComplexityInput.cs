@@ -26,6 +26,8 @@ public class ComplexityInput : MonoBehaviour
 
     public void QuantityModify(int zQuantity)
     {
+        AppManager.Instance.SoundManager.Play("OptionPick");
+
         complexity = Mathf.Clamp(complexity + zQuantity, MinComplexity, MaxComplexity);
         Refresh();
     }

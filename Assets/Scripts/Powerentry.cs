@@ -24,6 +24,8 @@ public class Powerentry : MonoBehaviour
 
     public void RemoveButton()
     {
+        AppManager.Instance.SoundManager.Play("OptionPick");
+
         ProfileEditor.CurrentlyEditingProfile.Powers.RemoveAll(p => p.Name == Power.Name);
 
         AppManager.Instance.UIManager.ProfileEditor.Refresh();

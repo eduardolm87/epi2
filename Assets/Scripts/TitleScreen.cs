@@ -8,6 +8,7 @@ public class TitleScreen : MonoBehaviour
 
     public void Open()
     {
+        AppManager.Instance.SoundManager.Play("IntroLoading");
         gameObject.SetActive(true);
     }
 
@@ -24,6 +25,7 @@ public class TitleScreen : MonoBehaviour
     public void StartAppZone()
     {
         //AppManager.Instance.UIManager.ProfileInspector.Open();
+        AppManager.Instance.SoundManager.Play("Pick");
         AppManager.Instance.UIManager.ProfileSelector.Open();
     }
 }

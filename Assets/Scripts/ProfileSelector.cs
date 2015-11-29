@@ -171,6 +171,8 @@ public class ProfileSelector : MonoBehaviour
         if (CurrentlyOpenedFolder == wantToChange)
             return;
 
+        AppManager.Instance.SoundManager.Play("OptionPick");
+
         ChangeFolder(wantToChange);
     }
 

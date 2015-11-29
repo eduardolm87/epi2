@@ -55,6 +55,8 @@ public class ProfilePreview : MonoBehaviour
 
     public void BackButton()
     {
+        AppManager.Instance.SoundManager.Play("Pick");
+
         ProfileEditor.CurrentlyEditingProfile = null;
         AppManager.Instance.UIManager.ProfileEditor.Close();
         AppManager.Instance.UIManager.ProfileInspector.Open(ProfileInspector.CurrentProfile);
@@ -62,6 +64,8 @@ public class ProfilePreview : MonoBehaviour
 
     public void DoneButton()
     {
+        AppManager.Instance.SoundManager.Play("Confirmation");
+
         ProfileInspector.CurrentProfile = ProfileEditor.CurrentlyEditingProfile;
 
         ProfileInspector.SaveCurrentProfile();

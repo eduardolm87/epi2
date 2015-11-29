@@ -20,6 +20,8 @@ public class PopupRename : MonoBehaviour
         if (!AppManager.Instance.UIManager.PopupManager.CanOpen)
             return;
 
+        AppManager.Instance.SoundManager.Play("Pick");
+
         AppManager.Instance.UIManager.PopupManager.gameObject.SetActive(true);
 
         gameObject.SetActive(true);
@@ -49,11 +51,15 @@ public class PopupRename : MonoBehaviour
             ToDoWhenAccepted(Input.text);
         }
 
+        AppManager.Instance.SoundManager.Play("Pick");
+
         Close();
     }
 
     public void CancelButton()
     {
+        AppManager.Instance.SoundManager.Play("Pick");
+
         Close();
     }
 }

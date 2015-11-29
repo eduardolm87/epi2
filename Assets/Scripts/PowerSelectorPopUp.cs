@@ -32,6 +32,8 @@ public class PowerSelectorPopUp : MonoBehaviour
         if (!AppManager.Instance.UIManager.PopupManager.CanOpen)
             return;
 
+        AppManager.Instance.SoundManager.Play("Pick");
+
         AppManager.Instance.UIManager.PopupManager.gameObject.SetActive(true);
 
         gameObject.SetActive(true);

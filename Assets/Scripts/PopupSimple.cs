@@ -52,6 +52,8 @@ public class PopupSimple : MonoBehaviour
         if (!AppManager.Instance.UIManager.PopupManager.CanOpen)
             return;
 
+        AppManager.Instance.SoundManager.Play("Pick");
+
         AppManager.Instance.UIManager.PopupManager.gameObject.SetActive(true);
 
         gameObject.SetActive(true);
@@ -99,6 +101,8 @@ public class PopupSimple : MonoBehaviour
     {
         if (zOrder >= AssociatedActions.Count)
             return;
+
+        AppManager.Instance.SoundManager.Play("Pick");
 
         if (AssociatedActions[zOrder].Action != null)
         {

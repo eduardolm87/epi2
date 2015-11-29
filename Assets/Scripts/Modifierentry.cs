@@ -27,6 +27,8 @@ public class Modifierentry : MonoBehaviour
 
     public void RemoveButton()
     {
+        AppManager.Instance.SoundManager.Play("OptionPick");
+
         ProfileEditor.CurrentlyEditingProfile.Modifiers.RemoveAll(m => m.Name == Modifier.Name);
         AppManager.Instance.UIManager.ProfileEditor.Modifiers.LoadModifiersFromProfile();
         AppManager.Instance.UIManager.ProfileEditor.Refresh();

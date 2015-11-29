@@ -26,6 +26,8 @@ public class AdditionalOptionSlot : MonoBehaviour
 
     public void ValueChanged()
     {
+        AppManager.Instance.SoundManager.Play("OptionPick");
+
         checked_ = (Slider.value == Slider.maxValue);
         if (checked_)
         {

@@ -53,6 +53,8 @@ public class LogPopup : MonoBehaviour
 
     public void OKButton()
     {
+        AppManager.Instance.SoundManager.Play("Pick");
+
         Close();
     }
 

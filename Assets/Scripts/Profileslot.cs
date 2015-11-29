@@ -11,6 +11,8 @@ public class Profileslot : MonoBehaviour
 
     public void ClickToEdit()
     {
+        AppManager.Instance.SoundManager.Play("Pick");
+
         AppManager.Instance.UIManager.ProfileInspector.Open(Profile);
         LogPopup.AddNewMessage(new LogMessage(System.DateTime.Now, AppManager.Instance.UIManager.PopupManager.LogPopup.NoteColor, Profile.Name, Defines.profileOpenLog));
     }

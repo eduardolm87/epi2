@@ -60,28 +60,42 @@ public class ProfileInspector : MonoBehaviour
 
     public void ButtonProfileEditor()
     {
+        AppManager.Instance.SoundManager.Play("Pick");
+
         AppManager.Instance.UIManager.ProfileEditor.Open();
     }
 
     public void ButtonChecks()
     {
+        AppManager.Instance.SoundManager.Play("Pick");
+
         AttributesWindow.Open();
     }
 
     public void ButtonDamage()
     {
         if (CurrentProfile.Health != HEALTHLEVELS.MUERTO)
+        {
+            AppManager.Instance.SoundManager.Play("Pick");
             DamagesWindow.Open();
+        }
         else
+        {
             AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.deadCharacterNoDamageSection, new List<PopupButton>());
+        }
     }
 
     public void ButtonPowers()
     {
         if (CurrentProfile.Powers.Count > 0)
+        {
+            AppManager.Instance.SoundManager.Play("Pick");
             PowersWindow.Open();
+        }
         else
+        {
             AppManager.Instance.UIManager.PopupManager.PopupSimple.Open(Defines.warningTitle, Defines.noPowers, new List<PopupButton>());
+        }
 
     }
 
@@ -130,6 +144,7 @@ public class ProfileInspector : MonoBehaviour
 
     public void ButtonLog()
     {
+        AppManager.Instance.SoundManager.Play("Pick");
         AppManager.Instance.UIManager.PopupManager.LogPopup.Open();
     }
 
@@ -158,7 +173,7 @@ public class ProfileInspector : MonoBehaviour
         CATtitle.text = Defines.catharsis;
         CAT.text = CurrentProfile.Catharsis.ToString();
 
-        //todo: portrait
+        AppManager.Instance.UIManager.StatusBar.Refresh();
     }
 
     public static void SaveCurrentProfile()
@@ -204,6 +219,7 @@ public class ProfileInspector : MonoBehaviour
         IOManager.Instance.SaveProfile(CurrentProfile);
         AppManager.Instance.ReferenceManager.LoadUserProfiles();
         LoadProfile(CurrentProfile);
+        RefreshInspector();
     }
 
     public void CloseAllSubWindows(GameObject Exception = null)
@@ -253,6 +269,28 @@ public class ProfileInspector : MonoBehaviour
         if (zAttributes.Contains(ATTRIBUTES.PRESENCIA)) { LevelsInvolved.Add(CurrentProfile.Presence); }
 
         ATTRIBUTELEVELS Average = Defines.GetAttributesAverage(LevelsInvolved);
+
+        switch (CurrentProfile.Health)
+        {
+            case HEALTHLEVELS.MAGULLADO:
+                if (zAttributes.Contains(ATTRIBUTES.VIGOR) || zAttributes.Contains(ATTRIBUTES.DESTREZA))
+                    zComplexity -= 1;
+                break;
+
+            case HEALTHLEVELS.HERIDO:
+                if (zAttributes.Contains(ATTRIBUTES.VIGOR) || zAttributes.Contains(ATTRIBUTES.DESTREZA))
+                    zComplexity -= 2;
+                break;
+
+            case HEALTHLEVELS.GRAVE:
+            case HEALTHLEVELS.MORIBUNDO:
+            case HEALTHLEVELS.MUERTO:
+                zComplexity -= 2;
+                break;
+        }
+
+        zComplexity = Mathf.Clamp(zComplexity, -10, 10);
+
 
         SUCCESSLEVELS successLevel = Defines.AttributesThrow(d20, zComplexity, Average);
 
@@ -352,11 +390,7 @@ public class ProfileInspector : MonoBehaviour
 
         CloseAllSubWindows();
 
-
         AppManager.Instance.UIManager.PopupManager.LoadingPopup.Open();
-
-        //AppManager.Instance.UIManager.PopupManager.LogPopup.Open();
-
     }
 
 

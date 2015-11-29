@@ -20,6 +20,7 @@ public class AppManager : MonoBehaviour
 
     public UIManager UIManager;
     public ReferenceManager ReferenceManager;
+    public SoundManager SoundManager;
 
     void Start()
     {

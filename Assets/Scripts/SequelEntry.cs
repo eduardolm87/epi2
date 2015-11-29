@@ -34,6 +34,8 @@ public class SequelEntry : MonoBehaviour
 
     public void ChangeValue()
     {
+        AppManager.Instance.SoundManager.Play("OptionPick");
+
         AppManager.Instance.UIManager.ProfileEditor.Notes.SelectSequel(this);
 
         if(Checked)

@@ -16,6 +16,8 @@ public class PowerDescriptorPopup : MonoBehaviour
 
     public void Open(Power zPower)
     {
+        AppManager.Instance.SoundManager.Play("Pick");
+
         AppManager.Instance.UIManager.PopupManager.gameObject.SetActive(true);
 
         gameObject.SetActive(true);

@@ -21,6 +21,8 @@ public class PopupModifiersEditor : MonoBehaviour
         if (!AppManager.Instance.UIManager.PopupManager.CanOpen)
             return;
 
+        AppManager.Instance.SoundManager.Play("Pick");
+
         AppManager.Instance.UIManager.PopupManager.gameObject.SetActive(true);
 
         gameObject.SetActive(true);
@@ -80,6 +82,8 @@ public class PopupModifiersEditor : MonoBehaviour
 
     public void ApplyChanges()
     {
+        AppManager.Instance.SoundManager.Play("Pick");
+
         Modifier existingModifier = ProfileEditor.CurrentlyEditingProfile.Modifiers.FirstOrDefault(m => m.Name == ModifierInput.text);
         if (existingModifier != null)
         {
@@ -107,11 +111,15 @@ public class PopupModifiersEditor : MonoBehaviour
 
     public void ChooseSuggestion(Modifier zModifier)
     {
+        AppManager.Instance.SoundManager.Play("OptionPick");
+
         ModifierInput.text = zModifier.Name;
     }
 
     public void ChangeLevel(int zQuantity)
     {
+        AppManager.Instance.SoundManager.Play("OptionPick");
+
         ModifierFinalLevel = Mathf.Clamp(ModifierFinalLevel + zQuantity, Defines.minModifierLevel, Defines.maxModifierLevel);
         RefreshLevel();
     }

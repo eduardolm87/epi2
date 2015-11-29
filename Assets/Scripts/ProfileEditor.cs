@@ -55,6 +55,8 @@ public class ProfileEditor : MonoBehaviour
             case Sections.Powers: Powers.Open(); break;
             case Sections.Notes: Notes.Open(); break;
         }
+
+        AppManager.Instance.SoundManager.Play("Pick");
     }
 
     public void CloseAllTabs(params Sections[] Exceptions)

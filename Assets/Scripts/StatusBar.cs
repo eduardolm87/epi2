@@ -42,11 +42,14 @@ public class StatusBar : MonoBehaviour
     {
         if (AppManager.Instance.UIManager.ProfileInspector.isAnySubwindowOpen)
         {
+            AppManager.Instance.SoundManager.Play("Pick");
             AppManager.Instance.UIManager.ProfileInspector.CloseAllSubWindows();
             AppManager.Instance.UIManager.StatusBar.Refresh();
         }
         else
         {
+            AppManager.Instance.SoundManager.Play("Pick");
+
             AppManager.Instance.UIManager.ProfileInspector.BackToProfileSelector();
         }
     }
