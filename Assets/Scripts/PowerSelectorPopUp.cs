@@ -149,7 +149,8 @@ public class PowerSelectorPopUp : MonoBehaviour
             HideTip();
         }
 
-        SnapTo(chosenEntry.GetComponent<RectTransform>());
+        //todo: Arreglar
+        //SnapTo(chosenEntry.GetComponent<RectTransform>());
     }
 
     IEnumerator TutorialTip()

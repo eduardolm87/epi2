@@ -232,6 +232,10 @@ public class ProfileInspector : MonoBehaviour
 
         if (Exception != DamagesWindow)
             DamagesWindow.Close();
+
+        if (AppManager.Instance.UIManager.StatusBar.gameObject.activeInHierarchy)
+            AppManager.Instance.UIManager.StatusBar.Refresh();
+
     }
 
     public bool isAnySubwindowOpen
@@ -356,8 +360,6 @@ public class ProfileInspector : MonoBehaviour
         }
 
         SUCCESSLEVELS successLevel = Defines.AttributesThrow(d20, complexity, CurrentProfile.Vigor);
-
-        Debug.Log("grado de exito en la tirada de vig: " + successLevel);
 
         string message = "";
         int damageLost = Defines.DamageLostThrow(successLevel, zIntensity);
