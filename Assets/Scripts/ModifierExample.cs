@@ -7,8 +7,4 @@ public class ModifierExample : MonoBehaviour
     [TextArea]
     public string Description = "";
 
-    void OnValidate()
-    {
-        gameObject.name = Modifier.Name;
-    }
 }
